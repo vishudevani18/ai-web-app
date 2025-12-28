@@ -1,0 +1,206 @@
+// API service for backend endpoints
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1/webapp';
+
+// Type definitions for API responses
+export interface AiFace {
+  id: string;
+  name: string;
+  description: string | null;
+  gender: 'male' | 'female';
+  imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ProductBackground {
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ProductPose {
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+  productBackgrounds: ProductBackground[];
+}
+
+export interface ProductTheme {
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+  productBackgrounds: ProductBackground[];
+}
+
+export interface ProductType {
+  id: string;
+  name: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  productThemes: ProductTheme[];
+  productPoses: ProductPose[];
+}
+
+export interface CategoryAiFaces {
+  male: AiFace[];
+  female: AiFace[];
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string | null;
+  createdAt: string;
+  updatedAt: string;
+  aiFaces: CategoryAiFaces;
+  productTypes: ProductType[];
+}
+
+export interface Industry {
+  id: string;
+  name: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  categories: Category[];
+}
+
+export interface IndustriesTreeResponse {
+  data: Industry[];
+  success: boolean;
+  error: boolean;
+  message: string;
+  timestamp: string;
+}
+
+export interface GenerateImageRequest {
+  industryId: string;
+  categoryId: string;
+  productTypeId: string;
+  productPoseId: string;
+  productThemeId: string;
+  productBackgroundId: string;
+  aiFaceId: string;
+  productImage: string; // base64 encoded image with data URL prefix
+  productImageMimeType: string;
+}
+
+export interface GenerateImageResponse {
+  success: boolean;
+  data: {
+    success: boolean;
+    imageUrl: string;
+    message: string;
+    expiresAt: string;
+  };
+  error: boolean;
+  message: string;
+  timestamp: string;
+}
+
+// Convert File to base64 data URL
+const fileToBase64DataURL = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const result = reader.result;
+      if (typeof result === 'string') {
+        resolve(result);
+      } else {
+        reject(new Error('Failed to convert file to base64'));
+      }
+    };
+    reader.onerror = () => reject(new Error('Failed to read file'));
+    reader.readAsDataURL(file);
+  });
+};
+
+// Fetch industries tree
+export const fetchIndustriesTree = async (): Promise<Industry[]> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/industries-tree`, {
+      method: 'GET',
+      headers: {
+        'accept': '*/*',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch industries tree: ${response.status} ${response.statusText}`);
+    }
+
+    const data: Industry[] = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching industries tree:', error);
+    throw error;
+  }
+};
+
+// Generate image
+export const generateImage = async (request: GenerateImageRequest): Promise<GenerateImageResponse> => {
+  try {
+    // Ensure productImage is in the correct format (data:image/...;base64,...)
+    const response = await fetch(`${API_BASE_URL}/generate-image`, {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to generate image: ${response.status} ${response.statusText} - ${errorText}`);
+    }
+
+    const data: GenerateImageResponse = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error generating image:', error);
+    throw error;
+  }
+};
+
+// Helper function to generate image from form data
+export const generateImageFromFormData = async (
+  productImage: File,
+  industryId: string,
+  categoryId: string,
+  productTypeId: string,
+  productPoseId: string,
+  productThemeId: string,
+  productBackgroundId: string,
+  aiFaceId: string
+): Promise<GenerateImageResponse> => {
+  // Convert file to base64 data URL
+  const productImageBase64 = await fileToBase64DataURL(productImage);
+  
+  const request: GenerateImageRequest = {
+    industryId,
+    categoryId,
+    productTypeId,
+    productPoseId,
+    productThemeId,
+    productBackgroundId,
+    aiFaceId,
+    productImage: productImageBase64,
+    productImageMimeType: productImage.type,
+  };
+
+  return generateImage(request);
+};
+
