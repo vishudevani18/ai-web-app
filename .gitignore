@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+web-app-ci.b64
+web-app-ci.json
+.env
