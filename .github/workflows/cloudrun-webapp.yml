@@ -1,0 +1,76 @@
+name: Web App CI/CD (Green → Blue)
+
+on:
+  push:
+    branches:
+      - green-test
+      - green-deploy
+      - blue-prod
+
+env:
+  GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  GCP_REGION: ${{ secrets.GCP_REGION }}
+  ARTIFACT_REGISTRY_REPO: ${{ secrets.ARTIFACT_REGISTRY_REPO }}
+  SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to GCP
+        run: |
+          echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode > gcp-key.json
+          gcloud auth activate-service-account --key-file=gcp-key.json
+          gcloud config set project $GCP_PROJECT_ID
+
+      - name: Configure Docker for Artifact Registry
+        run: |
+          gcloud auth configure-docker $GCP_REGION-docker.pkg.dev --quiet
+
+      - name: Determine environment variables
+        run: |
+          if [[ "${GITHUB_REF_NAME}" == "green-test" ]]; then
+            echo "VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL_TEST }}" >> $GITHUB_ENV
+            echo "TRAFFIC=0" >> $GITHUB_ENV
+          elif [[ "${GITHUB_REF_NAME}" == "green-deploy" ]]; then
+            echo "VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL_STAGING }}" >> $GITHUB_ENV
+            echo "TRAFFIC=10" >> $GITHUB_ENV
+          elif [[ "${GITHUB_REF_NAME}" == "blue-prod" ]]; then
+            echo "VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL_PROD }}" >> $GITHUB_ENV
+            echo "TRAFFIC=100" >> $GITHUB_ENV
+          fi
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            --build-arg VITE_API_BASE_URL=$VITE_API_BASE_URL \
+            -t $GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/$ARTIFACT_REGISTRY_REPO/$SERVICE_NAME:$IMAGE_TAG \
+            .
+
+      - name: Push Docker image
+        run: |
+          docker push $GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/$ARTIFACT_REGISTRY_REPO/$SERVICE_NAME:$IMAGE_TAG
+
+      - name: Deploy to Cloud Run (no traffic)
+        run: |
+          gcloud run deploy $SERVICE_NAME \
+            --image $GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/$ARTIFACT_REGISTRY_REPO/$SERVICE_NAME:$IMAGE_TAG \
+            --region $GCP_REGION \
+            --tag $GITHUB_REF_NAME \
+            --no-traffic \
+            --platform managed \
+            --quiet
+
+      - name: Apply traffic split
+        run: |
+          if [[ "$TRAFFIC" != "0" ]]; then
+            gcloud run services update-traffic $SERVICE_NAME \
+              --region $GCP_REGION \
+              --to-tags $GITHUB_REF_NAME=$TRAFFIC \
+              --quiet
+          fi
