@@ -1,0 +1,56 @@
+stages:
+  - build_push
+  - deploy
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "green-test"
+    - if: $CI_COMMIT_BRANCH == "green-deploy"
+    - if: $CI_COMMIT_BRANCH == "blue-prod"
+
+build_push:
+  stage: build_push
+  image: docker:24-dind
+  services:
+    - docker:24-dind
+  script:
+    - |
+      echo "Determining environment..."
+      if [ "$CI_COMMIT_BRANCH" = "green-test" ]; then
+        VITE_API_BASE_URL="$VITE_API_BASE_URL_TEST"
+      elif [ "$CI_COMMIT_BRANCH" = "green-deploy" ]; then
+        VITE_API_BASE_URL="$VITE_API_BASE_URL_STAGING"
+      elif [ "$CI_COMMIT_BRANCH" = "blue-prod" ]; then
+        VITE_API_BASE_URL="$VITE_API_BASE_URL_PROD"
+      fi
+
+      echo "Building Docker image..."
+      docker build \
+        --build-arg VITE_API_BASE_URL="$VITE_API_BASE_URL" \
+        -t ${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${ARTIFACT_REGISTRY_REPO}/${SERVICE_NAME}:${CI_COMMIT_SHA} \
+        .
+
+      gcloud auth configure-docker ${GCP_REGION}-docker.pkg.dev --quiet
+
+      docker push ${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${ARTIFACT_REGISTRY_REPO}/${SERVICE_NAME}:${CI_COMMIT_SHA}
+  only:
+    - green-test
+    - green-deploy
+    - blue-prod
+
+deploy:
+  stage: deploy
+  image: google/cloud-sdk:alpine
+  script:
+    - |
+      echo "Deploying to Cloud Run..."
+      gcloud run deploy web-app \
+        --image ${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${ARTIFACT_REGISTRY_REPO}/${SERVICE_NAME}:${CI_COMMIT_SHA} \
+        --region ${GCP_REGION} \
+        --tag ${CI_COMMIT_BRANCH} \
+        --no-traffic \
+        --platform managed
+  only:
+    - green-test
+    - green-deploy
+    - blue-prod
