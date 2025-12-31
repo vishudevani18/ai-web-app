@@ -37,7 +37,7 @@ You deploy **one Cloud Run service**, not multiple services.
 4. **deploy/deploy.sh** – Branch-aware deployment + traffic automation
 5. **.gitlab-ci.yml** – GitLab CI/CD pipeline
 
----
+
 
 ## Branch → Tag → Traffic Mapping
 
