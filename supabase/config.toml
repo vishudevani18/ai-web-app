@@ -1,4 +1,0 @@
-project_id = "oorguzqeikddbrrahmkj"
-
-[functions.generate-product-image]
-verify_jwt = false
