@@ -9,10 +9,9 @@ on:
 
 env:
   GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  SERVICE_NAME: web-app
   GCP_REGION: ${{ secrets.GCP_REGION }}
   ARTIFACT_REGISTRY_REPO: ${{ secrets.ARTIFACT_REGISTRY_REPO }}
-  SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
+  SERVICE_NAME: web-app
   IMAGE_TAG: ${{ github.sha }}
 
 jobs:
