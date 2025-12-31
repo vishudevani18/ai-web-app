@@ -110,6 +110,37 @@ export interface GenerateImageResponse {
   timestamp: string;
 }
 
+export interface GenerateBulkImageRequest {
+  industryId: string;
+  categoryId: string;
+  productTypeId: string;
+  productPoseIds: string[]; // Array of pose IDs (1-20 allowed)
+  productThemeId: string;
+  productBackgroundId: string;
+  aiFaceId: string;
+  productImage: string; // base64 encoded image with data URL prefix
+  productImageMimeType: string;
+}
+
+export interface BulkImageItem {
+  imageUrl: string;
+  poseId: string;
+  expiresAt: string;
+}
+
+export interface GenerateBulkImageResponse {
+  success: boolean;
+  data: {
+    success: boolean;
+    images: BulkImageItem[];
+    totalGenerated: number;
+    message: string;
+  };
+  error: boolean;
+  message: string;
+  timestamp: string;
+}
+
 // Convert File to base64 data URL
 const fileToBase64DataURL = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -202,5 +233,59 @@ export const generateImageFromFormData = async (
   };
 
   return generateImage(request);
+};
+
+// Generate bulk images
+export const generateBulkImage = async (request: GenerateBulkImageRequest): Promise<GenerateBulkImageResponse> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/generate-bulk-image`, {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to generate bulk images: ${response.status} ${response.statusText} - ${errorText}`);
+    }
+
+    const data: GenerateBulkImageResponse = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error generating bulk images:', error);
+    throw error;
+  }
+};
+
+// Helper function to generate bulk images from form data
+export const generateBulkImageFromFormData = async (
+  productImage: File,
+  industryId: string,
+  categoryId: string,
+  productTypeId: string,
+  productPoseIds: string[],
+  productThemeId: string,
+  productBackgroundId: string,
+  aiFaceId: string
+): Promise<GenerateBulkImageResponse> => {
+  // Convert file to base64 data URL
+  const productImageBase64 = await fileToBase64DataURL(productImage);
+  
+  const request: GenerateBulkImageRequest = {
+    industryId,
+    categoryId,
+    productTypeId,
+    productPoseIds,
+    productThemeId,
+    productBackgroundId,
+    aiFaceId,
+    productImage: productImageBase64,
+    productImageMimeType: productImage.type,
+  };
+
+  return generateBulkImage(request);
 };
 

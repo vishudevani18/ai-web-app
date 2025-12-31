@@ -11,7 +11,8 @@ import {
   Menu,
   X,
   Camera,
-  Zap
+  Zap,
+  Layers
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -22,6 +23,7 @@ interface DashboardLayoutProps {
 const navItems = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
   { id: "create", label: "Generate", icon: Sparkles, path: "/dashboard/create" },
+  { id: "catalog", label: "Catalog Generation", icon: Layers, path: "/dashboard/catalog" },
   { id: "gallery", label: "Gallery", icon: Image, path: "/dashboard/gallery" },
   { id: "guidelines", label: "Guidelines", icon: Tag, path: "/dashboard/guidelines" },
   { id: "credits", label: "Credits Buy", icon: CreditCard, path: "/dashboard/credits" },

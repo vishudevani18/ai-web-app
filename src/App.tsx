@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import DashboardHome from "./pages/dashboard/DashboardHome";
 import CreatePage from "./pages/dashboard/CreatePage";
+import CatalogPage from "./pages/dashboard/CatalogPage";
 import GuidelinesPage from "./pages/dashboard/GuidelinesPage";
 import CreditsPage from "./pages/dashboard/CreditsPage";
 import GalleryPage from "./pages/dashboard/GalleryPage";
@@ -35,6 +36,7 @@ const App = () => (
 {/* Dashboard Routes */}
           <Route path="/dashboard" element={<DashboardLayout><DashboardHome /></DashboardLayout>} />
           <Route path="/dashboard/create" element={<DashboardLayout><CreatePage /></DashboardLayout>} />
+          <Route path="/dashboard/catalog" element={<DashboardLayout><CatalogPage /></DashboardLayout>} />
           <Route path="/dashboard/gallery" element={<DashboardLayout><GalleryPage /></DashboardLayout>} />
           <Route path="/dashboard/guidelines" element={<DashboardLayout><GuidelinesPage /></DashboardLayout>} />
           <Route path="/dashboard/credits" element={<DashboardLayout><CreditsPage /></DashboardLayout>} />

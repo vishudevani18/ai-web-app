@@ -8,7 +8,6 @@ export default defineConfig({
     host: "::",
     port: 3001,
   },
-  base: '/',
   plugins: [react()],
   resolve: {
     alias: {
