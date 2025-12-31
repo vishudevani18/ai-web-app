@@ -62,6 +62,7 @@ jobs:
             --image $GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/$ARTIFACT_REGISTRY_REPO/$SERVICE_NAME:$IMAGE_TAG \
             --region $GCP_REGION \
             --tag $GITHUB_REF_NAME \
+            --no-traffic \
             --platform managed \
             --quiet
 
