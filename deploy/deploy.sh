@@ -49,7 +49,6 @@ gcloud config set project "$GCP_PROJECT_ID"
 gcloud run deploy "$SERVICE_NAME" \
   --image="$IMAGE_URL" \
   --tag="$REVISION_TAG" \
-  --no-traffic \
   --region="$GCP_REGION" \
   --platform=managed \
   --allow-unauthenticated \
