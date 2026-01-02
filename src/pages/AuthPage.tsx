@@ -176,16 +176,27 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-primary/5 via-background to-primary/10 p-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-hero relative overflow-hidden p-4">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-accent/15 to-primary/15 rounded-full blur-3xl" />
+      </div>
+
+      <div className="w-full max-w-md relative z-10">
         {/* Auth Card */}
-        <div className="bg-card border border-border rounded-2xl shadow-card p-8 relative">
+        <div className="bg-card/95 backdrop-blur-xl border-2 border-border/50 rounded-3xl shadow-2xl p-8 lg:p-10 relative overflow-hidden">
+          {/* Decorative gradient */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-primary/10 rounded-full blur-2xl" />
+          
           {/* Logo */}
-          <AuthLogo />
+          <div className="mb-6">
+            <AuthLogo />
+          </div>
           
           {/* Title */}
-          <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-primary mb-2">
+          <div className="text-center mb-6">
+            <h1 className="text-2xl lg:text-3xl font-black text-foreground mb-2">
               {getTitle()}
             </h1>
             <p className="text-muted-foreground text-sm">

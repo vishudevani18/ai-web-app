@@ -4,65 +4,73 @@
 
 @layer base {
   :root {
-    /* Fresh, modern color palette */
-    --background: 150 20% 97%; /* Soft mint white */
-    --foreground: 200 20% 15%; /* Deep charcoal */
+    /* Modern AI/E-commerce color palette - Purple/Violet with vibrant accents */
+    --background: 0 0% 100%; /* Pure white */
+    --foreground: 270 20% 15%; /* Deep purple-gray */
 
     --card: 0 0% 100%; /* Pure white */
-    --card-foreground: 200 20% 15%;
+    --card-foreground: 270 20% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 200 20% 15%;
+    --popover-foreground: 270 20% 15%;
 
-    /* Teal/Cyan primary - vibrant and modern */
-    --primary: 174 72% 40%; /* Vibrant teal #0D9488 */
+    /* Vibrant purple primary - modern, tech-forward */
+    --primary: 270 80% 60%; /* Vibrant purple #9d4edd */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 150 15% 95%; /* Light sage */
-    --secondary-foreground: 200 20% 15%;
+    --secondary: 280 30% 96%; /* Soft lavender */
+    --secondary-foreground: 270 20% 15%;
 
-    --muted: 150 10% 93%; /* Soft gray-green */
-    --muted-foreground: 200 10% 45%; /* Medium gray */
+    --muted: 270 15% 95%; /* Very light purple-gray */
+    --muted-foreground: 270 10% 50%; /* Medium gray */
 
-    --accent: 174 72% 45%; /* Lighter teal */
+    /* Pink accent - vibrant, energetic */
+    --accent: 330 80% 65%; /* Vibrant pink #f72585 */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 150 15% 88%; /* Soft border */
-    --input: 150 15% 88%;
-    --ring: 174 72% 40%;
+    --border: 270 20% 90%; /* Light purple-gray border */
+    --input: 270 20% 90%;
+    --ring: 270 80% 60%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    /* Custom design tokens */
-    --teal-light: 174 72% 50%;
-    --teal-dark: 174 72% 35%;
-    --emerald-accent: 158 64% 52%;
-    --coral-accent: 12 100% 65%;
-    --amber-highlight: 38 100% 65%;
+    /* Modern design tokens */
+    --purple-light: 270 70% 70%; /* Lighter purple */
+    --purple-dark: 270 80% 50%; /* Darker purple */
+    --pink-bright: 330 80% 65%; /* Bright pink */
+    --pink-soft: 330 60% 75%; /* Soft pink */
+    --blue-accent: 220 90% 60%; /* Electric blue */
+    --violet-accent: 280 70% 65%; /* Violet */
     
-    --gradient-primary: linear-gradient(135deg, hsl(174, 72%, 45%), hsl(174, 72%, 35%));
-    --gradient-hero: linear-gradient(180deg, hsl(150, 20%, 97%), hsl(174, 30%, 95%));
-    --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(150, 15%, 98%));
+    /* Modern vibrant gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(270, 80%, 60%), hsl(280, 70%, 65%));
+    --gradient-hero: linear-gradient(180deg, hsl(270, 30%, 98%), hsl(280, 25%, 96%));
+    --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(270, 20%, 98%));
+    --gradient-accent: linear-gradient(135deg, hsl(330, 80%, 65%), hsl(270, 80%, 60%));
+    --gradient-vibrant: linear-gradient(135deg, hsl(270, 80%, 60%), hsl(330, 80%, 65%), hsl(220, 90%, 60%));
+    --gradient-soft: linear-gradient(135deg, hsl(280, 30%, 96%), hsl(270, 25%, 97%));
     
-    --shadow-soft: 0 2px 12px hsla(174, 50%, 30%, 0.08);
-    --shadow-card: 0 4px 20px hsla(174, 50%, 30%, 0.1);
-    --shadow-hover: 0 12px 32px hsla(174, 50%, 30%, 0.15);
-    --shadow-glow: 0 0 40px hsla(174, 72%, 45%, 0.3);
+    /* Modern shadows with color */
+    --shadow-soft: 0 2px 12px hsla(270, 50%, 50%, 0.08);
+    --shadow-card: 0 4px 24px hsla(270, 50%, 50%, 0.12);
+    --shadow-hover: 0 12px 40px hsla(270, 50%, 50%, 0.2);
+    --shadow-glow: 0 0 40px hsla(270, 80%, 60%, 0.3);
+    --shadow-pink-glow: 0 0 30px hsla(330, 80%, 65%, 0.25);
     
-    --focus-ring: 0 0 0 3px hsla(174, 72%, 45%, 0.3);
+    --focus-ring: 0 0 0 3px hsla(270, 80%, 60%, 0.3);
     
-    /* Sidebar colors */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 200 20% 25%;
-    --sidebar-primary: 174 72% 40%;
+    /* Sidebar colors - modern theme */
+    --sidebar-background: 270 80% 60%; /* Vibrant purple */
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 330 80% 65%; /* Vibrant pink */
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 150 15% 95%;
-    --sidebar-accent-foreground: 200 20% 15%;
-    --sidebar-border: 150 15% 88%;
-    --sidebar-ring: 174 72% 40%;
+    --sidebar-accent: 280 30% 96%; /* Soft lavender */
+    --sidebar-accent-foreground: 270 20% 15%;
+    --sidebar-border: 270 70% 70%;
+    --sidebar-ring: 330 80% 65%;
   }
 }
 
@@ -93,9 +101,9 @@ html, body {
 
 .gradient-mesh {
   background: 
-    radial-gradient(at 20% 30%, hsla(38, 100%, 70%, 0.1) 0px, transparent 50%),
-    radial-gradient(at 80% 70%, hsla(12, 100%, 61%, 0.08) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, hsla(213, 94%, 68%, 0.06) 0px, transparent 50%);
+    radial-gradient(at 20% 30%, hsla(270, 80%, 60%, 0.1) 0px, transparent 50%),
+    radial-gradient(at 80% 70%, hsla(330, 80%, 65%, 0.08) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, hsla(220, 90%, 60%, 0.06) 0px, transparent 50%);
 }
 
 /* Shadow Utilities */
@@ -350,10 +358,10 @@ html, body {
 
 @keyframes glow {
   from {
-    box-shadow: 0 0 20px hsla(174, 72%, 45%, 0.3);
+    box-shadow: 0 0 20px hsla(270, 80%, 60%, 0.3);
   }
   to {
-    box-shadow: 0 0 40px hsla(174, 72%, 45%, 0.5);
+    box-shadow: 0 0 40px hsla(270, 80%, 60%, 0.5);
   }
 }
 
@@ -429,7 +437,7 @@ html, body {
 
 /* Gradient text utility */
 .text-gradient-primary {
-  background: linear-gradient(135deg, hsl(174, 72%, 40%), hsl(174, 72%, 50%));
+  background: linear-gradient(135deg, hsl(270, 80%, 60%), hsl(330, 80%, 65%));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -437,9 +445,9 @@ html, body {
 
 /* Glass effect */
 .glass-effect {
-  background: hsla(0, 0%, 100%, 0.8);
+  background: hsla(0, 0%, 100%, 0.85);
   backdrop-filter: blur(12px);
-  border: 1px solid hsla(174, 50%, 80%, 0.3);
+  border: 1px solid hsla(214, 50%, 80%, 0.2);
 }
 
 /* Card hover effect */
@@ -449,5 +457,5 @@ html, body {
 
 .card-hover-lift:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px hsla(174, 50%, 30%, 0.15);
+  box-shadow: 0 20px 40px hsla(270, 50%, 50%, 0.15);
 }

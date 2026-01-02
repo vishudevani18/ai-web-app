@@ -44,10 +44,11 @@ const LoginForm: React.FC<LoginFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-foreground">
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="space-y-1.5">
+        <label className="text-sm font-semibold text-foreground flex items-center gap-2">
           Email or Mobile Number
+          <span className="text-destructive">*</span>
         </label>
         <AuthInput
           icon="email"
@@ -59,8 +60,11 @@ const LoginForm: React.FC<LoginFormProps> = ({
         />
       </div>
 
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-foreground">Password</label>
+      <div className="space-y-1.5">
+        <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+          Password
+          <span className="text-destructive">*</span>
+        </label>
         <AuthInput
           icon="lock"
           showPasswordToggle
@@ -71,24 +75,35 @@ const LoginForm: React.FC<LoginFormProps> = ({
         />
       </div>
 
+      <div className="flex items-center justify-end -mt-1">
+        <button
+          type="button"
+          onClick={onForgotPassword}
+          className="text-xs text-primary hover:text-primary/80 font-semibold transition-colors"
+        >
+          Forgot password?
+        </button>
+      </div>
+
       <AuthButton type="submit" loading={loading}>
-        Log In
+        Sign In
       </AuthButton>
 
-      <button
-        type="button"
-        onClick={onForgotPassword}
-        className="w-full text-center text-primary hover:underline font-medium text-sm"
-      >
-        Forgot your password?
-      </button>
+      <div className="relative py-2">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-border"></div>
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-card px-2 text-muted-foreground">Or</span>
+        </div>
+      </div>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-center text-xs text-muted-foreground pt-1">
         Don't have an account?{" "}
         <button
           type="button"
           onClick={onSignUp}
-          className="text-primary hover:underline font-medium"
+          className="text-primary hover:text-primary/80 font-bold transition-colors"
         >
           Sign Up
         </button>

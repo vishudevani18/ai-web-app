@@ -37,10 +37,11 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2">
-        <label className="text-sm font-medium text-foreground">
-          Mobile Number <span className="text-destructive">*</span>
+        <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+          Mobile Number
+          <span className="text-destructive">*</span>
         </label>
         <AuthInput
           icon="phone"
@@ -50,7 +51,8 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
           onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
           error={error}
         />
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-muted-foreground flex items-center gap-1.5 mt-2">
+          <span className="w-1 h-1 bg-primary rounded-full"></span>
           Enter your registered mobile number to reset password
         </p>
       </div>
@@ -64,9 +66,9 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
         <button
           type="button"
           onClick={onBackToLogin}
-          className="text-primary hover:underline font-medium"
+          className="text-primary hover:text-primary/80 font-bold transition-colors"
         >
-          Back to Login
+          Back to Sign In
         </button>
       </p>
     </form>

@@ -14,12 +14,13 @@ const AuthButton = React.forwardRef<HTMLButtonElement, AuthButtonProps>(
         ref={ref}
         disabled={disabled || loading}
         className={cn(
-          "w-full py-3.5 px-6 rounded-xl font-semibold text-base",
-          "bg-primary text-primary-foreground",
+          "w-full py-4 px-6 rounded-xl font-bold text-base",
+          "bg-gradient-primary text-white shadow-lg hover:shadow-glow",
           "flex items-center justify-center gap-2",
-          "transition-all duration-200",
-          "hover:opacity-90 active:scale-[0.98]",
-          "disabled:opacity-50 disabled:cursor-not-allowed",
+          "transition-all duration-300",
+          "hover:scale-[1.02] active:scale-[0.98]",
+          "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
+          "relative overflow-hidden group",
           className
         )}
         {...props}
@@ -28,8 +29,11 @@ const AuthButton = React.forwardRef<HTMLButtonElement, AuthButtonProps>(
           <Loader2 className="w-5 h-5 animate-spin" />
         ) : (
           <>
-            {children}
-            {showArrow && <ArrowRight className="w-5 h-5" />}
+            <span className="relative z-10">{children}</span>
+            {showArrow && (
+              <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+            )}
+            <div className="absolute inset-0 bg-gradient-vibrant opacity-0 group-hover:opacity-100 transition-opacity" />
           </>
         )}
       </button>

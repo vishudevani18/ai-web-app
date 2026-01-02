@@ -5,7 +5,8 @@ import {
   Zap, 
   TrendingUp, 
   Receipt,
-  ImageIcon
+  ImageIcon,
+  Sparkles
 } from "lucide-react";
 
 const DashboardHome = () => {
@@ -48,75 +49,85 @@ const DashboardHome = () => {
     {
       label: "Total Generated Images",
       value: "0",
-      subtext: "1 Image = 10 Credits",
+      subtext: "1 Image = 5 Credits",
       icon: ImageIcon,
       iconBg: "bg-teal-500"
     },
   ];
 
-  const systemData = {
-    outfitStyles: 4,
-    cameraAngles: 11,
-    availableCategories: 3
-  };
+  const systemData = [
+    { label: "AI Faces", value: "10" },
+    { label: "Backgrounds", value: "20" },
+    { label: "Different Themes", value: "4" },
+    { label: "Total Different Poses", value: "50" },
+    { label: "Categories", value: "3" },
+    { label: "Industries", value: "1" }
+  ];
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
-      {/* Welcome Section */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-800">
-          Welcome Back, User 👋
+    <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in">
+      {/* Welcome Section - Mobile Responsive */}
+      <div className="mb-4 sm:mb-6 lg:mb-8">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-2 sm:mb-3">
+          Welcome Back! 👋
         </h1>
-        <p className="text-slate-500 mt-1">
-          Create stunning AI-powered product showcase models
+        <p className="text-sm sm:text-base md:text-lg text-muted-foreground">
+          Create stunning AI-powered product showcase models in seconds
         </p>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {/* Stats Grid - Mobile Responsive */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {stats.map((stat, index) => (
           <Card 
             key={index} 
-            className="bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
+            className="bg-card border-2 border-border/50 shadow-card hover:shadow-hover transition-all duration-300 hover:scale-[1.02] group touch-manipulation active:scale-[0.98]"
           >
-            <CardContent className="p-5">
-              <div className={`w-10 h-10 rounded-lg ${stat.iconBg} flex items-center justify-center mb-3`}>
-                <stat.icon className="w-5 h-5 text-white" />
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex items-start justify-between mb-3 sm:mb-4">
+                <div className="p-2 sm:p-3 bg-gradient-primary rounded-lg sm:rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+                  <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                </div>
               </div>
-              <p className="text-sm text-slate-500">{stat.label}</p>
-              <p className="text-2xl font-bold text-slate-800 mt-1">{stat.value}</p>
-              <p className="text-xs text-teal-600 mt-1">{stat.subtext}</p>
+              <p className="text-xs sm:text-sm font-semibold text-muted-foreground mb-1.5 sm:mb-2">{stat.label}</p>
+              <p className="text-2xl sm:text-3xl font-black text-foreground mb-1.5 sm:mb-2">{stat.value}</p>
+              <p className="text-xs text-primary font-bold">{stat.subtext}</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Categories Section */}
-      <div className="mt-8">
-        <h2 className="text-lg font-semibold text-slate-800 mb-3">Categories</h2>
-        <p className="text-slate-500 text-sm">No generations yet.</p>
-      </div>
+      {/* Quick Actions - Mobile Responsive */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        {/* Categories Section - Mobile Responsive */}
+        <Card className="bg-card border-2 border-border/50 shadow-card">
+          <CardContent className="p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-black text-foreground mb-3 sm:mb-4 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0" />
+              Categories
+            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground">No generations yet. Start creating your first image!</p>
+          </CardContent>
+        </Card>
 
-      {/* System Data Section */}
-      <Card className="bg-white border border-slate-200 shadow-sm">
-        <CardContent className="p-5">
-          <h3 className="font-semibold text-slate-800 mb-4">System Data</h3>
-          <div className="space-y-2">
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-slate-600">Outfit Styles:</span>
-              <span className="text-slate-800 font-medium">{systemData.outfitStyles}</span>
+        {/* System Data Section - Mobile Responsive */}
+        <Card className="bg-card border-2 border-border/50 shadow-card">
+          <CardContent className="p-4 sm:p-6">
+            <h3 className="text-lg sm:text-xl font-black text-foreground mb-3 sm:mb-4 flex items-center gap-2">
+              <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0" />
+              System Data
+            </h3>
+            <div className="space-y-2 sm:space-y-3">
+              {systemData.map((item, index) => (
+                <div key={index} className="flex justify-between items-center p-2.5 sm:p-3 bg-primary/5 rounded-lg sm:rounded-xl">
+                  <span className="text-xs sm:text-sm font-semibold text-foreground">{item.label}:</span>
+                  <span className="text-xs sm:text-sm font-black text-primary">{item.value}</span>
+                </div>
+              ))}
             </div>
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-slate-600">Camera Angles:</span>
-              <span className="text-slate-800 font-medium">{systemData.cameraAngles}</span>
-            </div>
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-slate-600">Available Categories:</span>
-              <span className="text-slate-800 font-medium">{systemData.availableCategories}</span>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

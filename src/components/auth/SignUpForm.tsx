@@ -37,10 +37,11 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2">
-        <label className="text-sm font-medium text-foreground">
-          Mobile Number <span className="text-destructive">*</span>
+        <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+          Mobile Number
+          <span className="text-destructive">*</span>
         </label>
         <AuthInput
           icon="phone"
@@ -50,7 +51,8 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
           onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
           error={error}
         />
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-muted-foreground flex items-center gap-1.5 mt-2">
+          <span className="w-1 h-1 bg-primary rounded-full"></span>
           OTP will be sent via WhatsApp
         </p>
       </div>
@@ -59,14 +61,23 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
         Send OTP via WhatsApp
       </AuthButton>
 
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-border"></div>
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-card px-2 text-muted-foreground">Or</span>
+        </div>
+      </div>
+
       <p className="text-center text-sm text-muted-foreground">
         Already have an account?{" "}
         <button
           type="button"
           onClick={onLogin}
-          className="text-primary hover:underline font-medium"
+          className="text-primary hover:text-primary/80 font-bold transition-colors"
         >
-          Log In
+          Sign In
         </button>
       </p>
     </form>

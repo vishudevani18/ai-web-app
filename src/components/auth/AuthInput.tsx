@@ -30,14 +30,14 @@ const AuthInput = React.forwardRef<HTMLInputElement, AuthInputProps>(
       <div className="relative">
         <div
           className={cn(
-            "flex items-center border rounded-xl bg-card transition-all duration-200",
-            "focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary",
-            error ? "border-destructive" : "border-border",
+            "flex items-center border-2 rounded-xl bg-background transition-all duration-300",
+            "focus-within:ring-2 focus-within:ring-primary/30 focus-within:border-primary shadow-sm",
+            error ? "border-destructive focus-within:ring-destructive/30" : "border-border/50 hover:border-primary/50",
             className
           )}
         >
           {Icon && (
-            <div className="pl-4 text-primary">
+            <div className="pl-4 pr-2 text-primary">
               <Icon className="w-5 h-5" />
             </div>
           )}
@@ -45,8 +45,8 @@ const AuthInput = React.forwardRef<HTMLInputElement, AuthInputProps>(
             ref={ref}
             type={inputType}
             className={cn(
-              "flex-1 py-3.5 px-4 bg-transparent text-foreground placeholder:text-muted-foreground focus:outline-none",
-              "text-base"
+              "flex-1 py-3.5 px-4 bg-transparent text-foreground placeholder:text-muted-foreground/60 focus:outline-none",
+              "text-base font-medium"
             )}
             {...props}
           />
@@ -54,7 +54,7 @@ const AuthInput = React.forwardRef<HTMLInputElement, AuthInputProps>(
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="pr-4 text-muted-foreground hover:text-foreground transition-colors"
+              className="pr-4 pl-2 text-muted-foreground hover:text-primary transition-colors"
             >
               {showPassword ? (
                 <EyeOff className="w-5 h-5" />
@@ -65,7 +65,7 @@ const AuthInput = React.forwardRef<HTMLInputElement, AuthInputProps>(
           )}
         </div>
         {error && (
-          <p className="text-sm text-destructive mt-1.5 ml-1">{error}</p>
+          <p className="text-sm text-destructive mt-2 ml-1 font-medium">{error}</p>
         )}
       </div>
     );

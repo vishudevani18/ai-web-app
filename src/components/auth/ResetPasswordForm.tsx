@@ -44,15 +44,16 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2">
-        <label className="text-sm font-medium text-foreground">
-          New Password <span className="text-destructive">*</span>
+        <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+          New Password
+          <span className="text-destructive">*</span>
         </label>
         <AuthInput
           icon="lock"
           showPasswordToggle
-          placeholder="Enter new password"
+          placeholder="Enter new password (min. 6 characters)"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           error={errors.password}
@@ -60,8 +61,9 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-medium text-foreground">
-          Confirm New Password <span className="text-destructive">*</span>
+        <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+          Confirm New Password
+          <span className="text-destructive">*</span>
         </label>
         <AuthInput
           icon="lock"
@@ -82,9 +84,9 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
         <button
           type="button"
           onClick={onBackToLogin}
-          className="text-primary hover:underline font-medium"
+          className="text-primary hover:text-primary/80 font-bold transition-colors"
         >
-          Back to Login
+          Back to Sign In
         </button>
       </p>
     </form>

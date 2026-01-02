@@ -5,124 +5,99 @@ import { Check, Zap, Crown, Image, Gift, ArrowRight } from "lucide-react";
 const CreditsPage = () => {
   const plans = [
     {
-      name: "Starter",
-      price: 199,
-      credits: 210,
-      bonus: 11,
-      images: "~20",
-      description: "Perfect for trying out AI photoshoots",
+      name: "Try Out",
+      price: 99,
+      credits: 100,
+      images: 20,
+      description: "Best to try out & explore. Perfect for small businesses.",
       popular: false,
     },
     {
-      name: "Pro",
-      price: 499,
-      credits: 550,
-      bonus: 51,
-      images: "~60",
-      description: "Best value for growing businesses",
+      name: "Standard",
+      price: 199,
+      credits: 200,
+      images: 40,
+      description: "Great for regular use and growing businesses.",
       popular: true,
     },
   ];
 
   return (
-    <div className="space-y-8 animate-fade-in max-w-3xl mx-auto">
+    <div className="space-y-8 animate-fade-in max-w-4xl mx-auto">
       {/* Header */}
-      <div className="text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/60 mb-4">
-          <Gift className="w-4 h-4 text-amber-500" />
-          <span className="text-sm font-medium text-amber-700">Get bonus credits on every purchase</span>
-        </div>
-        <h1 className="text-3xl lg:text-4xl font-bold mb-3">
-          <span className="bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 bg-clip-text text-transparent">Buy </span>
-          <span className="bg-gradient-to-r from-teal-500 to-emerald-500 bg-clip-text text-transparent">Credits</span>
+      <div className="text-center mb-8">
+        <h1 className="text-4xl lg:text-5xl font-black text-foreground mb-4">
+          Buy <span className="text-gradient-primary">Credits</span>
         </h1>
-        <p className="text-slate-500 text-lg">
-          1 Credit = ₹1 • 1 Image = 10 Credits
-        </p>
+        <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-primary/10 border border-primary/30 rounded-full mb-4">
+          <span className="text-base font-semibold text-foreground">
+            1 Credit = ₹1 • 1 Image = 5 Credits
+          </span>
+        </div>
       </div>
 
       {/* Pricing Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
         {plans.map((plan, index) => (
           <Card 
             key={index} 
-            className={`relative border-0 overflow-hidden transition-all duration-300 hover:shadow-2xl ${
+            className={`relative border-2 overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02] ${
               plan.popular 
-                ? "shadow-xl shadow-teal-500/20 ring-2 ring-teal-500" 
-                : "shadow-lg shadow-slate-100/80 hover:shadow-slate-200"
+                ? "border-primary shadow-xl shadow-primary/20 ring-2 ring-primary/30" 
+                : "border-border/50 hover:border-primary/50"
             }`}
           >
             {/* Popular Badge */}
             {plan.popular && (
-              <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-teal-500 to-emerald-500 text-center py-2">
-                <span className="text-xs font-bold text-white flex items-center justify-center gap-1">
-                  <Crown className="w-3.5 h-3.5" />
-                  BEST VALUE
-                </span>
+              <div className="absolute top-0 right-0 bg-gradient-primary text-white px-4 py-1.5 rounded-bl-2xl text-xs font-bold">
+                POPULAR
               </div>
             )}
             
-            <CardContent className={`p-8 ${plan.popular ? "pt-14" : ""}`}>
+            <CardContent className={`p-8 ${plan.popular ? "pt-12" : ""}`}>
               {/* Plan Name & Description */}
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-slate-800 mb-2">
+              <div className="mb-6">
+                <h3 className="text-2xl font-black text-foreground mb-2">
                   {plan.name}
                 </h3>
-                <p className="text-sm text-slate-500">{plan.description}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{plan.description}</p>
               </div>
               
               {/* Price */}
-              <div className="text-center mb-6">
-                <div className="text-slate-800">
-                  <span className="text-5xl font-bold">₹{plan.price}</span>
+              <div className="mb-8 pb-6 border-b-2 border-border/30">
+                <div className="flex items-baseline gap-2 mb-3">
+                  <span className="text-5xl font-black text-foreground">₹{plan.price}</span>
                 </div>
                 
-                {/* Bonus Badge */}
-                <div className="inline-flex items-center gap-1.5 mt-3 px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200">
-                  <Gift className="w-4 h-4 text-emerald-600" />
-                  <span className="text-sm font-semibold text-emerald-700">
-                    Get {plan.credits} credits (+{plan.bonus} bonus)
-                  </span>
+                {/* Credits Info */}
+                <div className="flex items-center gap-2 text-foreground">
+                  <Zap className="w-5 h-5 text-primary" />
+                  <span className="text-lg font-bold">{plan.credits} Credits</span>
                 </div>
               </div>
               
-              {/* Divider */}
-              <div className="h-px bg-slate-100 mb-6" />
-              
               {/* Features */}
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 text-slate-700">
-                  <div className="w-6 h-6 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
-                    <Zap className="w-3.5 h-3.5 text-teal-600" />
-                  </div>
-                  <span className="font-medium">{plan.credits} Credits</span>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start gap-3 text-foreground">
+                  <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="text-sm"><span className="font-semibold">{plan.images} images</span> (5 credits per image)</span>
                 </li>
-                <li className="flex items-center gap-3 text-slate-700">
-                  <div className="w-6 h-6 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
-                    <Image className="w-3.5 h-3.5 text-teal-600" />
-                  </div>
-                  <span>Create <span className="font-semibold">{plan.images} images</span></span>
+                <li className="flex items-start gap-3 text-foreground">
+                  <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">High-quality images</span>
                 </li>
-                <li className="flex items-center gap-3 text-slate-600">
-                  <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0">
-                    <Check className="w-3.5 h-3.5 text-slate-500" />
-                  </div>
-                  <span>High quality AI photos</span>
-                </li>
-                <li className="flex items-center gap-3 text-slate-600">
-                  <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0">
-                    <Check className="w-3.5 h-3.5 text-slate-500" />
-                  </div>
-                  <span>Credits never expire</span>
+                <li className="flex items-start gap-3 text-muted-foreground">
+                  <Check className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                  <span className="text-sm">Auto delete after 24 hours</span>
                 </li>
               </ul>
               
               {/* CTA Button */}
               <Button 
-                className={`w-full h-12 font-semibold transition-all ${
+                className={`w-full h-12 text-base font-bold transition-all duration-300 rounded-xl ${
                   plan.popular 
-                    ? "bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white shadow-lg shadow-teal-500/25" 
-                    : "bg-slate-800 hover:bg-slate-900 text-white"
+                    ? "bg-gradient-primary hover:bg-gradient-primary/90 text-white shadow-lg hover:shadow-glow" 
+                    : "bg-secondary hover:bg-primary/10 text-foreground border-2 border-border hover:border-primary/50"
                 }`}
               >
                 Buy Now
@@ -134,8 +109,8 @@ const CreditsPage = () => {
       </div>
 
       {/* Trust Info */}
-      <div className="text-center text-sm text-slate-500">
-        <p>Secure payment via Razorpay • Instant credit delivery</p>
+      <div className="text-center text-sm text-muted-foreground">
+        <p>Secure payment • Instant credit delivery</p>
       </div>
     </div>
   );

@@ -1,25 +1,23 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Gift, Crown, Zap, Image, Sparkles, CheckCircle, Shield } from "lucide-react";
+import { Zap, Image, CheckCircle, Shield, Clock, IndianRupee } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const plans = [
   {
-    name: "Starter",
-    price: 199,
-    credits: 210,
-    bonus: 11,
-    images: "~20",
-    description: "Perfect for trying out AI photoshoots",
+    name: "Try Out",
+    price: 99,
+    credits: 100,
+    images: 20,
+    description: "Best to try out & explore. Perfect for small businesses.",
     popular: false,
   },
   {
-    name: "Pro",
-    price: 499,
-    credits: 550,
-    bonus: 51,
-    images: "~60",
-    description: "Best value for growing businesses",
+    name: "Standard",
+    price: 199,
+    credits: 200,
+    images: 40,
+    description: "Great for regular use and growing businesses.",
     popular: true,
   },
 ];
@@ -28,108 +26,88 @@ const PricingSection = () => {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section ref={ref} id="pricing" className="section-padding relative overflow-hidden bg-background">
+    <section ref={ref} id="pricing" className="py-12 sm:py-16 lg:py-24 relative overflow-hidden bg-gradient-soft">
       <div className="absolute inset-0 gradient-mesh opacity-20" />
       
-      <div className="container-modern relative z-10">
-        <div className={`text-center mb-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/60 mb-4">
-            <Gift className="w-4 h-4 text-amber-500" />
-            <span className="text-sm font-medium text-amber-700">Get bonus credits on every purchase</span>
-          </div>
-          
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            <span className="text-foreground">Simple </span>
-            <span className="bg-gradient-to-r from-teal-500 to-emerald-500 bg-clip-text text-transparent">Pricing</span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Header - Simple and Clean - Mobile Responsive */}
+        <div className={`mb-8 sm:mb-12 text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-4 sm:mb-6 px-2">
+            <span className="text-foreground">Simple, </span>
+            <span className="text-gradient-primary">Transparent Pricing</span>
           </h2>
-          
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            1 Credit = ₹1 • 1 Image = 10 Credits
-          </p>
+          <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-primary/10 border border-primary/30 rounded-full">
+            <span className="text-xs sm:text-sm md:text-base font-semibold text-foreground">
+              1 Credit = ₹1 • 1 Image = 5 Credits
+            </span>
+          </div>
         </div>
 
-        {/* Pricing Cards */}
-        <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        {/* Pricing Cards - Redesigned - Mobile First */}
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           {plans.map((plan, index) => (
             <Card 
               key={index} 
-              className={`relative border-0 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] ${
+              className={`relative border-2 overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02] touch-manipulation active:scale-[0.98] ${
                 plan.popular 
-                  ? "shadow-xl shadow-teal-500/20 ring-2 ring-teal-500" 
-                  : "shadow-lg shadow-slate-100/80 hover:shadow-slate-200"
+                  ? "border-primary shadow-xl shadow-primary/20 ring-2 ring-primary/30" 
+                  : "border-border/50 hover:border-primary/50"
               }`}
             >
-              {/* Popular Badge */}
               {plan.popular && (
-                <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-teal-500 to-emerald-500 text-center py-2">
-                  <span className="text-xs font-bold text-white flex items-center justify-center gap-1">
-                    <Crown className="w-3.5 h-3.5" />
-                    BEST VALUE
-                  </span>
+                <div className="absolute top-0 right-0 bg-gradient-primary text-white px-3 sm:px-4 py-1 sm:py-1.5 rounded-bl-xl sm:rounded-bl-2xl text-xs font-bold">
+                  POPULAR
                 </div>
               )}
               
-              <CardContent className={`p-8 ${plan.popular ? "pt-14" : ""}`}>
-                {/* Plan Name & Description */}
-                <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold text-foreground mb-2">
+              <CardContent className={`p-5 sm:p-6 lg:p-8 ${plan.popular ? "pt-10 sm:pt-12" : ""}`}>
+                {/* Plan Name & Description - Mobile Responsive */}
+                <div className="mb-4 sm:mb-6">
+                  <h3 className="text-xl sm:text-2xl font-black text-foreground mb-2">
                     {plan.name}
                   </h3>
-                  <p className="text-sm text-muted-foreground">{plan.description}</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{plan.description}</p>
                 </div>
                 
-                {/* Price */}
-                <div className="text-center mb-6">
-                  <div className="text-foreground">
-                    <span className="text-5xl font-bold">₹{plan.price}</span>
+                {/* Price - Clean and Prominent - Mobile Responsive */}
+                <div className="mb-6 sm:mb-8 pb-4 sm:pb-6 border-b-2 border-border/30">
+                  <div className="flex items-baseline gap-2 mb-2 sm:mb-3">
+                    <span className="text-3xl sm:text-4xl lg:text-5xl font-black text-foreground">₹{plan.price}</span>
                   </div>
                   
-                  {/* Bonus Badge */}
-                  <div className="inline-flex items-center gap-1.5 mt-3 px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200">
-                    <Gift className="w-4 h-4 text-emerald-600" />
-                    <span className="text-sm font-semibold text-emerald-700">
-                      Get {plan.credits} credits (+{plan.bonus} bonus)
-                    </span>
+                  {/* Credits Info */}
+                  <div className="flex items-center gap-2 text-foreground">
+                    <IndianRupee className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0" />
+                    <span className="text-base sm:text-lg font-bold">{plan.credits} Credits</span>
                   </div>
                 </div>
                 
-                {/* Divider */}
-                <div className="h-px bg-border mb-6" />
-                
-                {/* Features */}
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-center gap-3 text-foreground">
-                    <div className="w-6 h-6 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
-                      <Zap className="w-3.5 h-3.5 text-teal-600" />
-                    </div>
-                    <span className="font-medium">{plan.credits} Credits</span>
+                {/* Features - Simple List - Mobile Responsive */}
+                <ul className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
+                  <li className="flex items-start gap-2 sm:gap-3 text-foreground">
+                    <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-xs sm:text-sm"><span className="font-semibold">{plan.images} images</span> (5 credits per image)</span>
                   </li>
-                  <li className="flex items-center gap-3 text-foreground">
-                    <div className="w-6 h-6 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
-                      <Image className="w-3.5 h-3.5 text-teal-600" />
-                    </div>
-                    <span>Create <span className="font-semibold">{plan.images} images</span></span>
+                  <li className="flex items-start gap-2 sm:gap-3 text-foreground">
+                    <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-xs sm:text-sm">All AI faces, backgrounds & poses</span>
                   </li>
-                  <li className="flex items-center gap-3 text-muted-foreground">
-                    <div className="w-6 h-6 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="w-3.5 h-3.5 text-teal-600" />
-                    </div>
-                    <span>All models, poses & backgrounds</span>
+                  <li className="flex items-start gap-2 sm:gap-3 text-foreground">
+                    <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-xs sm:text-sm">High-quality images</span>
                   </li>
-                  <li className="flex items-center gap-3 text-muted-foreground">
-                    <div className="w-6 h-6 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
-                      <Sparkles className="w-3.5 h-3.5 text-teal-600" />
-                    </div>
-                    <span>High-quality 4K images</span>
+                  <li className="flex items-start gap-2 sm:gap-3 text-muted-foreground">
+                    <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                    <span className="text-xs sm:text-sm">Auto delete after 24 hours</span>
                   </li>
                 </ul>
                 
-                {/* CTA Button */}
+                {/* CTA Button - Mobile Responsive */}
                 <Button 
-                  className={`w-full h-12 text-base font-bold transition-all duration-300 ${
+                  className={`w-full h-11 sm:h-12 text-sm sm:text-base font-bold transition-all duration-300 rounded-xl touch-manipulation active:scale-[0.98] min-h-[44px] ${
                     plan.popular 
-                      ? "bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white shadow-lg hover:shadow-teal-500/30" 
-                      : "bg-slate-100 hover:bg-slate-200 text-slate-800"
+                      ? "bg-gradient-primary hover:bg-gradient-primary/90 text-white shadow-lg hover:shadow-glow" 
+                      : "bg-secondary hover:bg-primary/10 text-foreground border-2 border-border hover:border-primary/50"
                   }`}
                   asChild
                 >
@@ -142,11 +120,11 @@ const PricingSection = () => {
           ))}
         </div>
 
-        {/* Money Back Guarantee */}
-        <div className={`mt-12 text-center transition-all duration-1000 delay-400 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-          <div className="bg-card border border-border rounded-full inline-flex items-center gap-3 px-8 py-4 shadow-soft">
-            <Shield className="w-5 h-5 text-emerald-500" />
-            <span className="font-semibold text-foreground">Secure payment • Instant credit delivery</span>
+        {/* Info Footer - Simple - Mobile Responsive */}
+        <div className={`mt-8 sm:mt-12 text-center transition-all duration-1000 delay-400 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+          <div className="inline-flex items-center gap-2 text-xs sm:text-sm text-muted-foreground px-4">
+            <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+            <span>Secure payment • Instant credit delivery</span>
           </div>
         </div>
       </div>
