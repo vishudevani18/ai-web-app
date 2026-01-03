@@ -289,3 +289,81 @@ export const generateBulkImageFromFormData = async (
   return generateBulkImage(request);
 };
 
+// System Data Response Interface
+export interface SystemDataResponse {
+  success: boolean;
+  data: Record<string, number>; // Dynamic keys with number values
+  error: boolean;
+  message: string;
+  timestamp: string;
+}
+
+// Fetch system data
+export const fetchSystemData = async (): Promise<Record<string, number>> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/systemdata`, {
+      method: 'GET',
+      headers: {
+        'accept': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch system data: ${response.status} ${response.statusText}`);
+    }
+
+    const data: SystemDataResponse = await response.json();
+    
+    if (!data.success || data.error) {
+      throw new Error(data.message || 'Failed to fetch system data');
+    }
+
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching system data:', error);
+    throw error;
+  }
+};
+
+// Generation Statistics Response Interface
+export interface GenerationStatisticsResponse {
+  success: boolean;
+  data: {
+    singleGenerationCount: number; // Number of single generation requests
+    singleGenerationImages: number; // Total images from single generations
+    catalogGenerationCount: number; // Number of catalog generation requests
+    catalogGenerationImages: number; // Total images from catalog generations
+    totalImages: number; // Total images generated (single + catalog)
+  };
+  error: boolean;
+  message: string;
+  timestamp: string;
+}
+
+// Fetch generation statistics
+export const fetchGenerationStatistics = async (): Promise<GenerationStatisticsResponse['data']> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/generation-statistics`, {
+      method: 'GET',
+      headers: {
+        'accept': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch generation statistics: ${response.status} ${response.statusText}`);
+    }
+
+    const data: GenerationStatisticsResponse = await response.json();
+    
+    if (!data.success || data.error) {
+      throw new Error(data.message || 'Failed to fetch generation statistics');
+    }
+
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching generation statistics:', error);
+    throw error;
+  }
+};
+
