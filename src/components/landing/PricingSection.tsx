@@ -111,7 +111,7 @@ const PricingSection = () => {
                   }`}
                   asChild
                 >
-                  <a href="/auth?mode=register">
+                  <a href="/auth/signup">
                     Get Started
                   </a>
                 </Button>

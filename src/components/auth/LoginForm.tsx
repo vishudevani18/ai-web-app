@@ -43,8 +43,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
     }
   };
 
+  const isFormValid = email.trim().length > 0 && password.length >= 6;
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
       <div className="space-y-1.5">
         <label className="text-sm font-semibold text-foreground flex items-center gap-2">
           Email or Mobile Number
@@ -85,7 +87,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         </button>
       </div>
 
-      <AuthButton type="submit" loading={loading}>
+      <AuthButton type="submit" loading={loading} disabled={!isFormValid || loading}>
         Sign In
       </AuthButton>
 

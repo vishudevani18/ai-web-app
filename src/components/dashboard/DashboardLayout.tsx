@@ -12,9 +12,11 @@ import {
   X,
   Camera,
   Zap,
-  Layers
+  Layers,
+  Settings
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/use-auth";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -27,13 +29,27 @@ const navItems = [
   { id: "gallery", label: "Gallery", icon: Image, path: "/dashboard/gallery" },
   { id: "guidelines", label: "Guidelines", icon: Tag, path: "/dashboard/guidelines" },
   { id: "credits", label: "Credits Buy", icon: CreditCard, path: "/dashboard/credits" },
+  { id: "settings", label: "Settings", icon: Settings, path: "/dashboard/settings" },
 ];
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { logout } = useAuth();
   const credits = 30;
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      // Redirect is handled in the logout hook
+    } catch (error) {
+      // Error toast is handled by interceptor
+      console.error("Logout error:", error);
+      // Even if logout fails, redirect to auth page
+      window.location.href = '/auth/login';
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-hero flex w-full">
@@ -78,10 +94,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         {/* Logout */}
         <div className="p-4 border-t border-border/30 mt-auto">
           <button 
-            onClick={() => {
-              localStorage.removeItem("mockUser");
-              navigate("/");
-            }}
+            onClick={handleLogout}
             className="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200 text-sm font-semibold rounded-xl w-full"
           >
             <LogOut className="w-5 h-5" />
@@ -143,10 +156,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                 );
               })}
               <button 
-                onClick={() => {
-                  localStorage.removeItem("mockUser");
-                  navigate("/");
-                }}
+                onClick={handleLogout}
                 className="flex items-center gap-3 px-4 py-3 text-white/70 active:text-white active:bg-white/10 transition-all text-sm font-semibold rounded-xl w-full mt-4 touch-manipulation active:scale-[0.98] min-h-[44px]"
               >
                 <LogOut className="w-5 h-5 flex-shrink-0" />

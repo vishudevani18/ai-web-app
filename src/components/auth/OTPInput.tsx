@@ -56,7 +56,7 @@ const OTPInput: React.FC<OTPInputProps> = ({
 
   return (
     <div className="space-y-2">
-      <div className="flex gap-3 justify-center">
+      <div className="flex gap-2 sm:gap-3 justify-center flex-wrap">
         {digits.slice(0, length).map((digit, index) => (
           <input
             key={index}
@@ -71,7 +71,7 @@ const OTPInput: React.FC<OTPInputProps> = ({
             onBlur={() => setFocusedIndex(-1)}
             onPaste={handlePaste}
             className={cn(
-              "w-12 h-14 text-center text-xl font-semibold rounded-xl border-2 bg-card",
+              "w-10 h-12 sm:w-12 sm:h-14 text-center text-lg sm:text-xl font-semibold rounded-lg sm:rounded-xl border-2 bg-card",
               "transition-all duration-200 outline-none",
               "focus:border-primary focus:ring-2 focus:ring-primary/20",
               focusedIndex === index ? "border-primary" : "border-border",
@@ -81,7 +81,7 @@ const OTPInput: React.FC<OTPInputProps> = ({
         ))}
       </div>
       {error && (
-        <p className="text-sm text-destructive text-center">{error}</p>
+        <p className="text-xs sm:text-sm text-destructive text-center px-2">{error}</p>
       )}
     </div>
   );

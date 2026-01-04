@@ -3,7 +3,7 @@ import AuthInput from "./AuthInput";
 import AuthButton from "./AuthButton";
 
 interface ResetPasswordFormProps {
-  onSubmit: (password: string) => void;
+  onSubmit: (password: string, confirmPassword: string) => void;
   onBackToLogin: () => void;
   loading?: boolean;
 }
@@ -39,9 +39,11 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      onSubmit(password);
+      onSubmit(password, confirmPassword);
     }
   };
+
+  const isFormValid = password.length >= 6 && confirmPassword.length >= 6 && password === confirmPassword;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -75,7 +77,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
         />
       </div>
 
-      <AuthButton type="submit" loading={loading}>
+      <AuthButton type="submit" loading={loading} disabled={!isFormValid || loading}>
         Reset Password
       </AuthButton>
 

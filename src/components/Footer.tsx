@@ -1,5 +1,6 @@
 import { Camera, Mail, Phone, MapPin, Instagram, Facebook, Twitter, Linkedin, Home, Wand2, CreditCard, MessageCircle, Sparkles, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const socialLinks = [
@@ -17,8 +18,8 @@ const Footer = () => {
   ];
 
   const legalLinks = [
-    { label: "Privacy Policy", href: "#" },
-    { label: "Terms of Service", href: "#" }
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms of Service", href: "/terms-of-service" }
   ];
 
   const scrollToSection = (sectionId: string) => {
@@ -117,13 +118,13 @@ const Footer = () => {
             <ul className="space-y-2 sm:space-y-3">
               {legalLinks.map((link, index) => (
                 <li key={index}>
-                  <a 
-                    href={link.href} 
+                  <Link 
+                    to={link.href}
                     className="text-white/70 hover:text-primary active:text-primary transition-colors text-xs sm:text-sm font-medium inline-flex items-center gap-2 group touch-manipulation active:scale-95 min-h-[44px]"
                   >
                     {link.label}
                     <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

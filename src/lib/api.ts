@@ -1,6 +1,6 @@
 // API service for backend endpoints
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1/webapp';
+import axiosInstance from './axios';
 
 // Type definitions for API responses
 export interface AiFace {
@@ -160,50 +160,15 @@ const fileToBase64DataURL = (file: File): Promise<string> => {
 
 // Fetch industries tree
 export const fetchIndustriesTree = async (): Promise<Industry[]> => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/industries-tree`, {
-      method: 'GET',
-      headers: {
-        'accept': '*/*',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch industries tree: ${response.status} ${response.statusText}`);
-    }
-
-    const data: Industry[] = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error fetching industries tree:', error);
-    throw error;
-  }
+  const response = await axiosInstance.get<Industry[]>('/industries-tree');
+  return response.data;
 };
 
 // Generate image
 export const generateImage = async (request: GenerateImageRequest): Promise<GenerateImageResponse> => {
-  try {
-    // Ensure productImage is in the correct format (data:image/...;base64,...)
-    const response = await fetch(`${API_BASE_URL}/generate-image`, {
-      method: 'POST',
-      headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(request),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Failed to generate image: ${response.status} ${response.statusText} - ${errorText}`);
-    }
-
-    const data: GenerateImageResponse = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error generating image:', error);
-    throw error;
-  }
+  // Ensure productImage is in the correct format (data:image/...;base64,...)
+  const response = await axiosInstance.post<GenerateImageResponse>('/generate-image', request);
+  return response.data;
 };
 
 // Helper function to generate image from form data
@@ -237,27 +202,8 @@ export const generateImageFromFormData = async (
 
 // Generate bulk images
 export const generateBulkImage = async (request: GenerateBulkImageRequest): Promise<GenerateBulkImageResponse> => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/generate-bulk-image`, {
-      method: 'POST',
-      headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(request),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Failed to generate bulk images: ${response.status} ${response.statusText} - ${errorText}`);
-    }
-
-    const data: GenerateBulkImageResponse = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error generating bulk images:', error);
-    throw error;
-  }
+  const response = await axiosInstance.post<GenerateBulkImageResponse>('/generate-bulk-image', request);
+  return response.data;
 };
 
 // Helper function to generate bulk images from form data
@@ -300,29 +246,14 @@ export interface SystemDataResponse {
 
 // Fetch system data
 export const fetchSystemData = async (): Promise<Record<string, number>> => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/systemdata`, {
-      method: 'GET',
-      headers: {
-        'accept': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch system data: ${response.status} ${response.statusText}`);
-    }
-
-    const data: SystemDataResponse = await response.json();
-    
-    if (!data.success || data.error) {
-      throw new Error(data.message || 'Failed to fetch system data');
-    }
-
-    return data.data;
-  } catch (error) {
-    console.error('Error fetching system data:', error);
-    throw error;
+  const response = await axiosInstance.get<SystemDataResponse>('/systemdata');
+  const data = response.data;
+  
+  if (!data.success || data.error) {
+    throw new Error(data.message || 'Failed to fetch system data');
   }
+
+  return data.data;
 };
 
 // Generation Statistics Response Interface
@@ -342,28 +273,13 @@ export interface GenerationStatisticsResponse {
 
 // Fetch generation statistics
 export const fetchGenerationStatistics = async (): Promise<GenerationStatisticsResponse['data']> => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/generation-statistics`, {
-      method: 'GET',
-      headers: {
-        'accept': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch generation statistics: ${response.status} ${response.statusText}`);
-    }
-
-    const data: GenerationStatisticsResponse = await response.json();
-    
-    if (!data.success || data.error) {
-      throw new Error(data.message || 'Failed to fetch generation statistics');
-    }
-
-    return data.data;
-  } catch (error) {
-    console.error('Error fetching generation statistics:', error);
-    throw error;
+  const response = await axiosInstance.get<GenerationStatisticsResponse>('/generation-statistics');
+  const data = response.data;
+  
+  if (!data.success || data.error) {
+    throw new Error(data.message || 'Failed to fetch generation statistics');
   }
+
+  return data.data;
 };
 

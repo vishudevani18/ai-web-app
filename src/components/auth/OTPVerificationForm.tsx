@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import OTPInput from "./OTPInput";
 import AuthButton from "./AuthButton";
-import { X } from "lucide-react";
 
 interface OTPVerificationFormProps {
   phone: string;
@@ -12,6 +11,7 @@ interface OTPVerificationFormProps {
   loading?: boolean;
   title?: string;
   subtitle?: string;
+  otpContext?: "signup" | "forgot-password";
 }
 
 const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
@@ -22,7 +22,8 @@ const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
   onBackToLogin,
   loading,
   title = "Verify OTP",
-  subtitle = "Reset your password to secure your account",
+  subtitle,
+  otpContext = "signup",
 }) => {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
@@ -47,6 +48,8 @@ const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
     onVerify(otp);
   };
 
+  const isOtpValid = otp.length === 6;
+
   const handleResend = () => {
     setResendTimer(60);
     setCanResend(false);
@@ -55,18 +58,11 @@ const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 p-2 rounded-full hover:bg-secondary transition-colors"
-      >
-        <X className="w-5 h-5 text-muted-foreground" />
-      </button>
-
-      <div className="text-center space-y-2">
-        <h3 className="text-lg font-semibold text-primary">Enter OTP</h3>
-        <p className="text-sm text-muted-foreground">
-          Enter OTP sent to <span className="font-semibold text-foreground">+91 {phone}</span>
+    <div className="space-y-3 sm:space-y-4 md:space-y-6">
+      <div className="text-center space-y-1.5 sm:space-y-2 mb-2 sm:mb-3 md:mb-4">
+        <h3 className="text-base sm:text-lg md:text-xl font-semibold text-foreground">Enter OTP</h3>
+        <p className="text-xs sm:text-sm text-muted-foreground px-1 sm:px-2">
+          Enter OTP sent to <span className="font-semibold text-foreground break-all">+91 {phone}</span>
         </p>
       </div>
 
@@ -76,7 +72,12 @@ const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
         error={error}
       />
 
-      <AuthButton onClick={handleVerify} loading={loading}>
+      <AuthButton 
+        onClick={handleVerify} 
+        loading={loading} 
+        disabled={!isOtpValid || loading}
+        className="w-full text-sm sm:text-base py-3 sm:py-4"
+      >
         Verify OTP
       </AuthButton>
 
@@ -85,18 +86,18 @@ const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({
           <button
             type="button"
             onClick={handleResend}
-            className="text-primary hover:underline font-medium text-sm"
+            className="text-primary hover:underline font-medium text-xs sm:text-sm"
           >
             Resend OTP
           </button>
         ) : (
-          <p className="text-sm text-muted-foreground">
+          <p className="text-xs sm:text-sm text-muted-foreground">
             Resend OTP in {resendTimer}s
           </p>
         )}
       </div>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-center text-xs sm:text-sm text-muted-foreground px-1">
         Remember your password?{" "}
         <button
           type="button"

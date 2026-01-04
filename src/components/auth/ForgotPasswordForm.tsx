@@ -36,6 +36,8 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
     }
   };
 
+  const isPhoneValid = phone.length === 10 && /^\d{10}$/.test(phone);
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2">
@@ -57,7 +59,7 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
         </p>
       </div>
 
-      <AuthButton type="submit" loading={loading}>
+      <AuthButton type="submit" loading={loading} disabled={!isPhoneValid || loading}>
         Send OTP
       </AuthButton>
 
