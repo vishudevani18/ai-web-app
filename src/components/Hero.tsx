@@ -124,13 +124,13 @@ const Hero = () => {
         {/* Geometric AI Shapes */}
         <div className="absolute inset-0">
           {/* Hexagons - AI/Tech representation */}
-          {[...Array(10)].map((_, i) => (
+          {[...Array(3)].map((_, i) => (
             <div
               key={`hex-${i}`}
               className="absolute opacity-40"
               style={{
-                left: `${10 + (i * 9)}%`,
-                top: `${15 + (i % 4) * 25}%`,
+                left: `${20 + (i * 30)}%`,
+                top: `${25 + (i % 2) * 40}%`,
                 width: '80px',
                 height: '80px',
                 background: 'linear-gradient(135deg, rgba(157, 78, 221, 0.8), rgba(247, 37, 133, 0.8))',
@@ -143,13 +143,13 @@ const Hero = () => {
           ))}
           
           {/* Triangles */}
-          {[...Array(8)].map((_, i) => (
+          {[...Array(5)].map((_, i) => (
             <div
               key={`triangle-${i}`}
               className="absolute opacity-35"
               style={{
-                left: `${5 + (i * 12)}%`,
-                top: `${10 + (i % 3) * 30}%`,
+                left: `${10 + (i * 20)}%`,
+                top: `${15 + (i % 3) * 30}%`,
                 width: '60px',
                 height: '60px',
                 background: 'linear-gradient(135deg, rgba(157, 78, 221, 0.7), rgba(247, 37, 133, 0.7))',
@@ -162,13 +162,13 @@ const Hero = () => {
           ))}
           
           {/* Pentagons */}
-          {[...Array(6)].map((_, i) => (
+          {[...Array(3)].map((_, i) => (
             <div
               key={`pentagon-${i}`}
               className="absolute opacity-30"
               style={{
-                left: `${8 + (i * 15)}%`,
-                top: `${20 + (i % 3) * 28}%`,
+                left: `${25 + (i * 25)}%`,
+                top: `${30 + (i % 2) * 35}%`,
                 width: '70px',
                 height: '70px',
                 background: 'linear-gradient(135deg, rgba(247, 37, 133, 0.7), rgba(157, 78, 221, 0.7))',
@@ -181,13 +181,13 @@ const Hero = () => {
           ))}
           
           {/* Octagons */}
-          {[...Array(5)].map((_, i) => (
+          {[...Array(2)].map((_, i) => (
             <div
               key={`octagon-${i}`}
               className="absolute opacity-25"
               style={{
-                left: `${12 + (i * 18)}%`,
-                top: `${18 + (i % 2) * 35}%`,
+                left: `${30 + (i * 40)}%`,
+                top: `${25 + (i * 50)}%`,
                 width: '65px',
                 height: '65px',
                 background: 'linear-gradient(135deg, rgba(157, 78, 221, 0.6), rgba(247, 37, 133, 0.6))',
