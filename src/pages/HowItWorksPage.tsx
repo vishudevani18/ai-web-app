@@ -203,9 +203,24 @@ const HowItWorksPage = () => {
             <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto">
               Join 200+ brands creating stunning product photos with AI
             </p>
-            <Button size="xl" variant="secondary" className="text-lg shadow-hover" onClick={() => window.location.href = '/'}>
-              Start Free Trial
-              <Sparkles className="w-5 h-5 ml-2" />
+            <Button 
+              size="xl" 
+              className="group relative bg-gradient-primary text-white text-lg font-black shadow-lg hover:shadow-[0_0_40px_rgba(157,78,221,0.6)] transition-all duration-500 overflow-hidden hover:scale-110 hover:-translate-y-1 touch-manipulation active:scale-[0.95]"
+              onClick={() => window.location.href = '/'}
+            >
+              {/* Animated gradient shimmer */}
+              <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent via-primary to-accent bg-[length:200%_auto] animate-shimmer opacity-50" />
+              
+              {/* Pulsing glow effect */}
+              <div className="absolute inset-0 bg-gradient-primary rounded-xl animate-glow-pulse opacity-70" />
+              
+              {/* Shine effect on hover */}
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-xl" />
+              
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                Start Free Trial
+                <Sparkles className="w-5 h-5 relative z-10 group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300" />
+              </span>
             </Button>
           </div>
         </div>

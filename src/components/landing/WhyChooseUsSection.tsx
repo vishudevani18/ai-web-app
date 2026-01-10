@@ -7,9 +7,12 @@ import {
   Award, 
   Layout,
   CheckCircle2,
-  Image as ImageIcon
+  Image as ImageIcon,
+  ArrowRight
 } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const benefits = [
   {
@@ -52,6 +55,7 @@ const benefits = [
 
 const WhyChooseUsSection = () => {
   const { ref, isVisible } = useScrollAnimation();
+  const navigate = useNavigate();
 
   return (
     <section id="why-choose-us" ref={ref} className="py-12 sm:py-16 lg:py-24 bg-background relative overflow-hidden">
@@ -149,12 +153,30 @@ const WhyChooseUsSection = () => {
 
         {/* Bottom CTA Section */}
         <div className={`mt-12 sm:mt-16 lg:mt-20 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-primary/10 border-2 border-primary/30 rounded-2xl sm:rounded-3xl px-6 sm:px-8 py-4 sm:py-5 backdrop-blur-sm shadow-lg">
-            <ImageIcon className="w-5 h-5 sm:w-6 sm:h-6 text-primary flex-shrink-0" />
-            <p className="text-sm sm:text-base md:text-lg font-semibold text-foreground">
-              Ready to create your perfect catalog? <span className="text-primary font-black">Start generating now!</span>
-            </p>
-          </div>
+          <Button
+            onClick={() => navigate("/generate")}
+            size="xl"
+            className="group relative bg-gradient-primary text-white shadow-lg hover:shadow-[0_0_50px_rgba(157,78,221,0.7)] transition-all duration-500 text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-6 rounded-xl font-black overflow-hidden touch-manipulation active:scale-[0.95] hover:scale-110 hover:-translate-y-1"
+          >
+            {/* Animated gradient shimmer */}
+            <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent via-primary to-accent bg-[length:200%_auto] animate-shimmer opacity-60" />
+            
+            {/* Pulsing glow effect */}
+            <div className="absolute inset-0 bg-gradient-primary rounded-xl animate-glow-pulse opacity-80" />
+            
+            {/* Main content */}
+            <span className="relative z-10 flex items-center justify-center gap-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
+              <ImageIcon className="w-5 h-5 sm:w-6 sm:h-6 relative z-10" />
+              <span>Ready to create your perfect catalog? Start generating now!</span>
+              <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 relative z-10 group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300" />
+            </span>
+            
+            {/* Hover gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-vibrant opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
+            
+            {/* Shine sweep effect on hover */}
+            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-xl" />
+          </Button>
         </div>
       </div>
     </section>

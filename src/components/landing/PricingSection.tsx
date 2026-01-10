@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Zap, Image, CheckCircle, Shield, Clock, IndianRupee } from "lucide-react";
+import { Zap, Image, CheckCircle, Shield, Clock, IndianRupee, ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const plans = [
@@ -104,15 +104,26 @@ const PricingSection = () => {
                 
                 {/* CTA Button - Mobile Responsive */}
                 <Button 
-                  className={`w-full h-11 sm:h-12 text-sm sm:text-base font-bold transition-all duration-300 rounded-xl touch-manipulation active:scale-[0.98] min-h-[44px] ${
+                  className={`group relative w-full h-11 sm:h-12 text-sm sm:text-base font-black transition-all duration-500 rounded-xl touch-manipulation active:scale-[0.95] min-h-[44px] overflow-hidden ${
                     plan.popular 
-                      ? "bg-gradient-primary hover:bg-gradient-primary/90 text-white shadow-lg hover:shadow-glow" 
-                      : "bg-secondary hover:bg-primary/10 text-foreground border-2 border-border hover:border-primary/50"
+                      ? "bg-gradient-primary text-white shadow-lg hover:shadow-[0_0_40px_rgba(157,78,221,0.6)] hover:scale-105 hover:-translate-y-1" 
+                      : "bg-secondary hover:bg-primary/10 text-foreground border-2 border-border hover:border-primary/50 hover:shadow-[0_10px_30px_rgba(157,78,221,0.2)]"
                   }`}
                   asChild
                 >
-                  <a href="/auth/signup">
-                    Get Started
+                  <a href="/auth/signup" className="relative z-10 flex items-center justify-center gap-2">
+                    {plan.popular && (
+                      <>
+                        {/* Animated gradient shimmer */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent via-primary to-accent bg-[length:200%_auto] animate-shimmer opacity-50" />
+                        {/* Pulsing glow effect */}
+                        <div className="absolute inset-0 bg-gradient-primary rounded-xl animate-glow-pulse opacity-70" />
+                        {/* Shine effect on hover */}
+                        <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-xl" />
+                      </>
+                    )}
+                    <span className="relative z-10">Get Started</span>
+                    <ArrowRight className={`w-4 h-4 relative z-10 ${plan.popular ? 'group-hover:translate-x-2 group-hover:scale-110' : 'group-hover:translate-x-1'} transition-all duration-300`} />
                   </a>
                 </Button>
               </CardContent>

@@ -94,14 +94,26 @@ const CreditsPage = () => {
               
               {/* CTA Button */}
               <Button 
-                className={`w-full h-12 text-base font-bold transition-all duration-300 rounded-xl ${
+                className={`group relative w-full h-12 text-base font-black transition-all duration-500 rounded-xl overflow-hidden touch-manipulation active:scale-[0.95] ${
                   plan.popular 
-                    ? "bg-gradient-primary hover:bg-gradient-primary/90 text-white shadow-lg hover:shadow-glow" 
+                    ? "bg-gradient-primary text-white shadow-lg hover:shadow-[0_0_40px_rgba(157,78,221,0.6)] hover:scale-105 hover:-translate-y-1" 
                     : "bg-secondary hover:bg-primary/10 text-foreground border-2 border-border hover:shadow-[0_10px_30px_rgba(157,78,221,0.2)]"
                 }`}
               >
-                Buy Now
-                <ArrowRight className="w-4 h-4 ml-2" />
+                {plan.popular && (
+                  <>
+                    {/* Animated gradient shimmer */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent via-primary to-accent bg-[length:200%_auto] animate-shimmer opacity-50" />
+                    {/* Pulsing glow effect */}
+                    <div className="absolute inset-0 bg-gradient-primary rounded-xl animate-glow-pulse opacity-70" />
+                    {/* Shine effect on hover */}
+                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-xl" />
+                  </>
+                )}
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  Buy Now
+                  <ArrowRight className={`w-4 h-4 relative z-10 ${plan.popular ? 'group-hover:translate-x-2 group-hover:scale-110' : 'group-hover:translate-x-1'} transition-all duration-300`} />
+                </span>
               </Button>
             </CardContent>
           </Card>

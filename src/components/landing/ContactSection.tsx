@@ -309,17 +309,26 @@ const ContactSection = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-primary hover:bg-gradient-primary/90 text-white rounded-lg sm:rounded-xl py-5 sm:py-6 text-sm sm:text-base font-bold group shadow-lg hover:shadow-glow transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed mt-4 sm:mt-6 touch-manipulation active:scale-[0.98] min-h-[48px]"
+                className="group relative w-full bg-gradient-primary text-white rounded-lg sm:rounded-xl py-5 sm:py-6 text-sm sm:text-base font-black shadow-lg hover:shadow-[0_0_40px_rgba(157,78,221,0.6)] transition-all duration-500 disabled:opacity-70 disabled:cursor-not-allowed mt-4 sm:mt-6 touch-manipulation active:scale-[0.95] min-h-[48px] overflow-hidden hover:scale-105 hover:-translate-y-1 disabled:hover:scale-100 disabled:hover:translate-y-0"
               >
+                {/* Animated gradient shimmer */}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent via-primary to-accent bg-[length:200%_auto] animate-shimmer opacity-50" />
+                
+                {/* Pulsing glow effect */}
+                <div className="absolute inset-0 bg-gradient-primary rounded-xl animate-glow-pulse opacity-70" />
+                
+                {/* Shine effect on hover */}
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-xl" />
+                
                 {isSubmitting ? (
-                  <span className="flex items-center justify-center gap-2">
+                  <span className="relative z-10 flex items-center justify-center gap-2">
                     <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
                     Sending Message...
                   </span>
                 ) : (
-                  <span className="flex items-center justify-center gap-2">
+                  <span className="relative z-10 flex items-center justify-center gap-2">
                     Send Message
-                    <Send className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+                    <Send className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300" />
                   </span>
                 )}
               </Button>

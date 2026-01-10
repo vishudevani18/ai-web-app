@@ -400,11 +400,14 @@ const Hero = () => {
         <div className="flex flex-col items-center justify-center text-center space-y-4 sm:space-y-5 lg:space-y-6">
           {/* AI Badge */}
           <div className="animate-fade-in">
-            <div className="relative inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border-2 border-primary/50 rounded-full px-4 py-2 shadow-lg group hover:shadow-glow hover:border-primary/70 transition-all duration-300">
+            <div className="relative inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border-2 border-primary/50 rounded-full px-4 py-2 shadow-lg group hover:shadow-[0_0_20px_rgba(157,78,221,0.4)] hover:border-primary/70 transition-all duration-300">
+              {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-primary/20 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
-              <div className="relative flex items-center gap-2">
-                <div className="p-1 bg-gradient-primary rounded-full flex-shrink-0">
-                  <Sparkles className="w-3.5 h-3.5 text-white animate-pulse-slow" />
+              
+              {/* Content */}
+              <div className="relative flex items-center gap-2 z-10">
+                <div className="p-1 bg-gradient-primary rounded-full flex-shrink-0 group-hover:animate-icon-rotate group-hover:scale-110 transition-all duration-300">
+                  <Sparkles className="w-3.5 h-3.5 text-white" />
                 </div>
                 <span className="text-xs font-black text-white tracking-wider uppercase">AI-Powered E-Commerce Studio</span>
               </div>
@@ -436,26 +439,31 @@ const Hero = () => {
               The only platform where you choose{" "}
               <span className="text-primary font-bold drop-shadow-[0_1px_4px_rgba(157,78,221,0.4)]">your own AI faces, backgrounds, poses, and themes</span>
             </p>
-            <div className="flex items-center justify-center gap-2 sm:gap-3 bg-white/15 backdrop-blur-md border border-primary/30 rounded-xl px-4 py-2.5 shadow-lg">
-              <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+            <div className="flex items-center justify-center gap-2 sm:gap-3 bg-white/15 backdrop-blur-md border border-primary/30 rounded-xl px-4 py-2.5 shadow-lg animate-scale-in-bounce hover:border-primary/50 hover:shadow-[0_0_20px_rgba(157,78,221,0.3)] transition-all duration-300" style={{ animationDelay: "0.2s" }}>
+              <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0 animate-icon-pulse" />
               <p className="text-sm sm:text-base text-white/95 drop-shadow-[0_1px_3px_rgba(0,0,0,0.2)]">
                 Ready to upload to{" "}
-                <span className="text-primary font-bold drop-shadow-[0_1px_3px_rgba(157,78,221,0.4)]">Myntra, Amazon, Meesho, Ajio</span> & more
+                <span className="text-primary font-bold drop-shadow-[0_1px_3px_rgba(157,78,221,0.4)] inline-block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-shimmer">Myntra, Amazon, Meesho, Ajio</span> & more
               </p>
             </div>
           </div>
 
           {/* Compact Features Grid - 4 columns on desktop */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 animate-fade-in max-w-4xl mx-auto w-full" style={{ animationDelay: "0.2s" }}>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 max-w-4xl mx-auto w-full">
             {uniqueFeatures.map((feature, index) => {
               const Icon = feature.icon;
               return (
                 <div
                   key={index}
-                  className="bg-white/15 backdrop-blur-md border border-primary/30 rounded-lg p-2.5 sm:p-3 shadow-lg hover:shadow-[0_20px_50px_rgba(157,78,221,0.35)] hover:shadow-[0_0_30px_rgba(157,78,221,0.2)] hover:border-primary/50 transition-all duration-300 touch-manipulation active:scale-[0.98]"
+                  className="bg-white/15 backdrop-blur-md border border-primary/30 rounded-lg p-2.5 sm:p-3 shadow-lg hover:shadow-[0_20px_50px_rgba(157,78,221,0.35)] hover:shadow-[0_0_30px_rgba(157,78,221,0.2)] hover:border-primary/50 hover:scale-105 hover:-translate-y-1 transition-all duration-300 touch-manipulation active:scale-[0.98] animate-slide-in-up"
+                  style={{ 
+                    animationDelay: `${0.25 + index * 0.1}s`,
+                    opacity: 0,
+                    animationFillMode: 'forwards'
+                  }}
                 >
                   <div className="flex flex-col items-center text-center gap-1.5 sm:gap-2">
-                    <div className="p-1.5 bg-gradient-primary rounded-lg flex-shrink-0">
+                    <div className="p-1.5 bg-gradient-primary rounded-lg flex-shrink-0 hover:animate-glow-pulse transition-all duration-300">
                       <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
                     </div>
                     <div className="min-w-0">
@@ -469,10 +477,17 @@ const Hero = () => {
           </div>
 
           {/* Combined Benefits & Stats - Horizontal Layout */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 animate-fade-in max-w-4xl mx-auto w-full" style={{ animationDelay: "0.25s" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-4xl mx-auto w-full">
             {/* Cost Savings */}
-            <div className="flex items-center gap-3 bg-white/15 backdrop-blur-md border border-primary/30 rounded-xl p-3 sm:p-4 shadow-lg">
-              <div className="p-2 bg-gradient-primary rounded-lg flex-shrink-0">
+            <div 
+              className="flex items-center gap-3 bg-white/15 backdrop-blur-md border border-primary/30 rounded-xl p-3 sm:p-4 shadow-lg hover:border-primary/50 hover:shadow-[0_0_25px_rgba(157,78,221,0.3)] hover:scale-105 transition-all duration-300 animate-slide-in-left"
+              style={{ 
+                animationDelay: "0.35s",
+                opacity: 0,
+                animationFillMode: 'forwards'
+              }}
+            >
+              <div className="p-2 bg-gradient-primary rounded-lg flex-shrink-0 animate-icon-pulse hover:animate-glow-pulse transition-all duration-300">
                 <IndianRupee className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
               <div className="flex-1 min-w-0">
@@ -482,9 +497,16 @@ const Hero = () => {
             </div>
 
             {/* Stats Combined */}
-            <div className="flex items-center gap-2 sm:gap-3 bg-white/15 backdrop-blur-md border border-primary/30 rounded-xl p-3 sm:p-4 shadow-lg">
+            <div 
+              className="flex items-center gap-2 sm:gap-3 bg-white/15 backdrop-blur-md border border-primary/30 rounded-xl p-3 sm:p-4 shadow-lg hover:border-primary/50 hover:shadow-[0_0_25px_rgba(157,78,221,0.3)] hover:scale-105 transition-all duration-300 animate-slide-in-right"
+              style={{ 
+                animationDelay: "0.4s",
+                opacity: 0,
+                animationFillMode: 'forwards'
+              }}
+            >
               <div className="flex items-center gap-2 flex-1">
-                <div className="p-1.5 bg-gradient-primary rounded-lg flex-shrink-0">
+                <div className="p-1.5 bg-gradient-primary rounded-lg flex-shrink-0 hover:animate-glow-pulse transition-all duration-300">
                   <Zap className="w-3.5 h-3.5 text-white" />
                 </div>
                 <div className="min-w-0">
@@ -494,7 +516,7 @@ const Hero = () => {
               </div>
               <div className="h-8 w-px bg-primary/30" />
               <div className="flex items-center gap-2 flex-1">
-                <div className="p-1.5 bg-gradient-primary rounded-lg flex-shrink-0">
+                <div className="p-1.5 bg-gradient-primary rounded-lg flex-shrink-0 hover:animate-glow-pulse transition-all duration-300">
                   <Users className="w-3.5 h-3.5 text-white" />
                 </div>
                 <div className="min-w-0">
@@ -504,7 +526,7 @@ const Hero = () => {
               </div>
               <div className="h-8 w-px bg-primary/30" />
               <div className="flex items-center gap-2 flex-1">
-                <div className="p-1.5 bg-gradient-primary rounded-lg flex-shrink-0">
+                <div className="p-1.5 bg-gradient-primary rounded-lg flex-shrink-0 hover:animate-glow-pulse transition-all duration-300">
                   <Palette className="w-3.5 h-3.5 text-white" />
                 </div>
                 <div className="min-w-0">
@@ -516,17 +538,34 @@ const Hero = () => {
           </div>
 
           {/* CTA Button */}
-          <div className="pt-2 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+          <div className="pt-2">
             <Button
               onClick={() => navigate("/generate")}
               size="xl"
-              className="group relative bg-gradient-primary hover:bg-gradient-primary/90 text-white shadow-lg hover:shadow-glow transition-all duration-500 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-5 rounded-xl font-bold overflow-hidden touch-manipulation active:scale-[0.98]"
+              className="group relative bg-gradient-primary text-white shadow-lg hover:shadow-[0_0_50px_rgba(157,78,221,0.7)] transition-all duration-500 text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-6 rounded-xl font-black overflow-hidden touch-manipulation active:scale-[0.95] animate-scale-in-bounce hover:scale-110 hover:-translate-y-1"
+              style={{ 
+                animationDelay: "0.5s",
+                opacity: 0,
+                animationFillMode: 'forwards'
+              }}
             >
-              <span className="relative z-10 flex items-center justify-center gap-2">
+              {/* Animated gradient shimmer */}
+              <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent via-primary to-accent bg-[length:200%_auto] animate-shimmer opacity-60" />
+              
+              {/* Pulsing glow effect */}
+              <div className="absolute inset-0 bg-gradient-primary rounded-xl animate-glow-pulse opacity-80" />
+              
+              {/* Main content */}
+              <span className="relative z-10 flex items-center justify-center gap-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
                 Start Creating Free
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-2 transition-all duration-300 group-hover:scale-110 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" />
               </span>
-              <div className="absolute inset-0 bg-gradient-vibrant opacity-0 group-hover:opacity-100 transition-opacity" />
+              
+              {/* Hover gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-vibrant opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
+              
+              {/* Shine sweep effect on hover */}
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-xl" />
             </Button>
           </div>
         </div>

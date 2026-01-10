@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Camera, Sparkles, Home, Wand2, CreditCard, Mail, LogIn, UserPlus, Award } from "lucide-react";
+import { Menu, X, Camera, Home, Wand2, CreditCard, Mail, LogIn, UserPlus, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
@@ -124,27 +124,21 @@ const Navigation = () => {
             </div>
 
             {/* Auth Buttons - Eye-catching */}
-            <div className="flex items-center gap-3 pl-6 border-l border-border/50">
-              <Button 
-                variant="ghost" 
-                asChild 
-                className="font-semibold text-foreground/70 hover:text-primary hover:bg-primary/10 rounded-xl px-5 py-2 transition-all duration-200"
+            <div className="flex items-center gap-3 pl-6 border-l border-border/50 relative z-50">
+              <a 
+                href="/auth/login" 
+                className="inline-flex items-center justify-center gap-2 font-semibold text-foreground hover:text-primary bg-background border-2 border-border hover:border-primary/50 hover:bg-primary/10 rounded-xl px-5 py-2 transition-all duration-200 relative z-50 min-h-[40px]"
               >
-                <a href="/auth/login" className="flex items-center gap-2">
-                  <LogIn className="w-4 h-4" />
-                  Sign In
-                </a>
-              </Button>
-              <Button 
-                asChild 
-                className="font-bold bg-gradient-primary hover:bg-gradient-primary/90 text-white shadow-lg hover:shadow-glow transition-all duration-300 rounded-xl px-6 py-2.5 group relative overflow-hidden"
+                <LogIn className="w-4 h-4" />
+                Sign In
+              </a>
+              <a 
+                href="/auth/signup" 
+                className="inline-flex items-center justify-center gap-2 font-semibold text-foreground hover:text-primary bg-background border-2 border-primary/50 hover:border-primary hover:bg-primary/10 rounded-xl px-5 py-2 transition-all duration-200 relative z-50 min-h-[40px]"
               >
-                <a href="/auth/signup" className="flex items-center gap-2 relative z-10">
-                  <UserPlus className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                  <span>Sign Up</span>
-                  <div className="absolute inset-0 bg-gradient-vibrant opacity-0 group-hover:opacity-100 transition-opacity" />
-                </a>
-              </Button>
+                <UserPlus className="w-4 h-4" />
+                Sign Up
+              </a>
             </div>
           </div>
 
@@ -193,25 +187,20 @@ const Navigation = () => {
 
             {/* Mobile Auth Buttons - Touch Friendly */}
             <div className="flex flex-col gap-3 pt-4 sm:pt-6 border-t border-border/50 mt-4">
-              <Button 
-                variant="outline" 
-                asChild 
-                className="w-full font-semibold border-border/50 rounded-xl py-4 sm:py-6 hover:bg-primary/5 hover:border-primary/50 transition-all touch-manipulation active:scale-[0.98] min-h-[48px] text-sm sm:text-base"
+              <a 
+                href="/auth/login" 
+                className="inline-flex items-center justify-center gap-2 w-full font-semibold text-foreground hover:text-primary bg-background border-2 border-border hover:border-primary/50 hover:bg-primary/10 rounded-xl py-4 sm:py-6 transition-all touch-manipulation active:scale-[0.98] min-h-[48px] text-sm sm:text-base"
               >
-                <a href="/auth/login" className="flex items-center justify-center gap-2">
-                  <LogIn className="w-4 h-4 sm:w-5 sm:h-5" />
-                  Sign In
-                </a>
-              </Button>
-              <Button 
-                asChild 
-                className="w-full font-bold bg-gradient-primary hover:bg-gradient-primary/90 text-white shadow-lg hover:shadow-glow transition-all rounded-xl py-4 sm:py-6 touch-manipulation active:scale-[0.98] min-h-[48px] text-sm sm:text-base"
+                <LogIn className="w-4 h-4 sm:w-5 sm:h-5" />
+                Sign In
+              </a>
+              <a 
+                href="/auth/signup" 
+                className="inline-flex items-center justify-center gap-2 w-full font-semibold text-foreground hover:text-primary bg-background border-2 border-primary/50 hover:border-primary hover:bg-primary/10 rounded-xl py-4 sm:py-6 transition-all touch-manipulation active:scale-[0.98] min-h-[48px] text-sm sm:text-base"
               >
-                <a href="/auth/signup" className="flex items-center justify-center gap-2">
-                  <UserPlus className="w-4 h-4 sm:w-5 sm:h-5" />
-                  Sign Up Free
-                </a>
-              </Button>
+                <UserPlus className="w-4 h-4 sm:w-5 sm:h-5" />
+                Sign Up
+              </a>
             </div>
           </div>
         )}
