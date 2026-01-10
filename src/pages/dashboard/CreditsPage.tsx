@@ -41,10 +41,10 @@ const CreditsPage = () => {
         {plans.map((plan, index) => (
           <Card 
             key={index} 
-            className={`relative border-2 overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02] ${
+            className={`relative border-2 overflow-hidden transition-all duration-300 hover:scale-[1.02] ${
               plan.popular 
-                ? "border-primary shadow-xl shadow-primary/20 ring-2 ring-primary/30" 
-                : "border-border/50 hover:border-primary/50"
+                ? "border-primary shadow-xl shadow-primary/20 ring-2 ring-primary/30 hover:shadow-[0_25px_60px_rgba(157,78,221,0.35)]" 
+                : "border-border/50 shadow-soft hover:shadow-[0_20px_50px_rgba(157,78,221,0.25)] hover:shadow-[0_0_30px_rgba(157,78,221,0.15)]"
             }`}
           >
             {/* Popular Badge */}
@@ -97,7 +97,7 @@ const CreditsPage = () => {
                 className={`w-full h-12 text-base font-bold transition-all duration-300 rounded-xl ${
                   plan.popular 
                     ? "bg-gradient-primary hover:bg-gradient-primary/90 text-white shadow-lg hover:shadow-glow" 
-                    : "bg-secondary hover:bg-primary/10 text-foreground border-2 border-border hover:border-primary/50"
+                    : "bg-secondary hover:bg-primary/10 text-foreground border-2 border-border hover:shadow-[0_10px_30px_rgba(157,78,221,0.2)]"
                 }`}
               >
                 Buy Now

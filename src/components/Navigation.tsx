@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Camera, Sparkles, Home, Wand2, CreditCard, Mail, LogIn, UserPlus } from "lucide-react";
+import { Menu, X, Camera, Sparkles, Home, Wand2, CreditCard, Mail, LogIn, UserPlus, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
@@ -9,6 +9,7 @@ const Navigation = () => {
 
   const sections = [
     { id: "hero", label: "Home", icon: Home },
+    { id: "why-choose-us", label: "Why Choose Us", icon: Award },
     { id: "features", label: "Features", icon: Wand2 },
     { id: "pricing", label: "Pricing", icon: CreditCard },
     { id: "contact", label: "Contact", icon: Mail },

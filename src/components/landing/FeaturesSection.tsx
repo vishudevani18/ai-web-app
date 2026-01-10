@@ -77,12 +77,12 @@ const FeaturesSection = () => {
             return (
               <div
                 key={index}
-                className={`group relative rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 xl:p-10 shadow-soft border-2 transition-all duration-300 flex flex-col h-full cursor-pointer touch-manipulation active:scale-[0.98] ${
+                className={`group relative rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 xl:p-10 border-2 transition-all duration-300 flex flex-col h-full cursor-pointer touch-manipulation active:scale-[0.98] ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 } ${
                   isHighlight 
-                    ? 'bg-gradient-primary text-white border-accent/50 shadow-glow hover:shadow-glow hover:scale-[1.02]' 
-                    : 'bg-card border-border/30 hover:border-primary/60 hover:shadow-card hover:scale-[1.02] hover:bg-card/50'
+                    ? 'bg-gradient-primary text-white border-accent/50 shadow-glow hover:shadow-glow hover:shadow-[0_20px_60px_rgba(157,78,221,0.4)] hover:scale-[1.02]' 
+                    : 'bg-card border-border/30 shadow-soft hover:shadow-[0_20px_50px_rgba(157,78,221,0.25)] hover:shadow-[0_0_30px_rgba(157,78,221,0.15)] hover:scale-[1.02] hover:bg-card/50'
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >

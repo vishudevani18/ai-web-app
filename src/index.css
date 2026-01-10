@@ -435,6 +435,83 @@ html, body {
   }
 }
 
+@keyframes neuralNetwork {
+  0%, 100% {
+    background-position: 0% 0%, 0% 0%, 50% 50%, 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%, 50% 50%, 50% 50%, 100% 100%;
+  }
+}
+
+@keyframes gridMove {
+  0% {
+    background-position: 0 0, 0 0, 25px 25px, 25px 25px;
+  }
+  100% {
+    background-position: 100px 100px, 100px 100px, 125px 125px, 125px 125px;
+  }
+}
+
+@keyframes pulseLine {
+  0%, 100% {
+    opacity: 0.2;
+    stroke-width: 1;
+  }
+  50% {
+    opacity: 0.5;
+    stroke-width: 2;
+  }
+}
+
+@keyframes pulseNode {
+  0%, 100% {
+    r: 6;
+    opacity: 0.4;
+  }
+  50% {
+    r: 10;
+    opacity: 0.8;
+  }
+}
+
+@keyframes rotateHex {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes floatShape {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.1;
+  }
+  50% {
+    transform: translateY(-30px) rotate(180deg);
+    opacity: 0.2;
+  }
+}
+
+@keyframes dataStream {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
 /* Gradient text utility */
 .text-gradient-primary {
   background: linear-gradient(135deg, hsl(270, 80%, 60%), hsl(330, 80%, 65%));

@@ -1,4 +1,4 @@
-import { Camera, Mail, Phone, MapPin, Instagram, Facebook, Twitter, Linkedin, Home, Wand2, CreditCard, MessageCircle, Sparkles, ArrowRight } from "lucide-react";
+import { Camera, Mail, Phone, MapPin, Instagram, Facebook, Twitter, Linkedin, Home, Wand2, CreditCard, MessageCircle, Sparkles, ArrowRight, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -12,6 +12,7 @@ const Footer = () => {
 
   const sections = [
     { id: "hero", label: "Home", icon: Home },
+    { id: "why-choose-us", label: "Why Choose Us", icon: Award },
     { id: "features", label: "Features", icon: Wand2 },
     { id: "pricing", label: "Pricing", icon: CreditCard },
     { id: "contact", label: "Contact", icon: MessageCircle },
