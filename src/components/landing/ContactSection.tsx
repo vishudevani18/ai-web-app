@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { toast } from "sonner";
+import { useState, useCallback } from "react";
+import { submitContactForm, type ContactFormData, type ValidationError } from "@/lib/public-api";
 
 const ContactSection = () => {
   const { ref, isVisible } = useScrollAnimation();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
     phone: "",
@@ -17,18 +17,104 @@ const ContactSection = () => {
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Client-side validation
+  const validateForm = useCallback((): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    // Name validation: 2-100 characters
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = "Name must be at least 2 characters";
+    } else if (formData.name.trim().length > 100) {
+      newErrors.name = "Name must be less than 100 characters";
+    }
+
+    // Email validation
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email.trim())) {
+        newErrors.email = "Please provide a valid email address";
+      } else if (formData.email.trim().length > 150) {
+        newErrors.email = "Email must be less than 150 characters";
+      }
+    }
+
+    // Phone validation: optional, max 20 characters
+    if (formData.phone && formData.phone.trim().length > 20) {
+      newErrors.phone = "Phone number must be less than 20 characters";
+    }
+
+    // Subject validation: 3-200 characters
+    if (!formData.subject.trim()) {
+      newErrors.subject = "Subject is required";
+    } else if (formData.subject.trim().length < 3) {
+      newErrors.subject = "Subject must be at least 3 characters";
+    } else if (formData.subject.trim().length > 200) {
+      newErrors.subject = "Subject must be less than 200 characters";
+    }
+
+    // Message validation: 10-5000 characters
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required";
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters long";
+    } else if (formData.message.trim().length > 5000) {
+      newErrors.message = "Message must be less than 5000 characters";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }, [formData]);
+
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Clear previous errors
+    setErrors({});
+
+    // Client-side validation
+    if (!validateForm()) {
+      // Client-side validation failed - show a simple message
+      // (This is not an API error, so interceptor won't handle it)
+      return;
+    }
+
     setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast.success("Message sent! We'll get back to you soon.");
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-    setIsSubmitting(false);
-  };
+
+    try {
+      await submitContactForm(formData);
+      
+      // Success toast is automatically shown by axios interceptor
+      // Reset form on success
+      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+      setErrors({});
+    } catch (error: any) {
+      // All error toasts are handled by axios interceptor globally
+      // Only handle field-specific validation errors for inline display
+      if (error.response) {
+        const status = error.response.status;
+        const errorData = error.response.data;
+
+        // Handle validation errors (400) - show field-specific errors inline
+        if (status === 400 && errorData?.errors && Array.isArray(errorData.errors)) {
+          const validationErrors: Record<string, string> = {};
+          errorData.errors.forEach((err: ValidationError) => {
+            validationErrors[err.field] = err.message;
+          });
+          setErrors(validationErrors);
+          // General error toast is already shown by axios interceptor
+        }
+        // All other errors (429, 500, network, etc.) are handled by axios interceptor
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [formData, validateForm]);
 
   const contactInfo = [
     { icon: Mail, label: "Email", value: "hello@photoai.in", href: "mailto:hello@photoai.in" },
@@ -108,10 +194,18 @@ const ContactSection = () => {
                   id="name"
                   placeholder="Enter your full name"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="h-11 sm:h-12 rounded-lg sm:rounded-xl border-border/50 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm sm:text-base"
+                  onChange={(e) => {
+                    setFormData({ ...formData, name: e.target.value });
+                    if (errors.name) setErrors({ ...errors, name: "" });
+                  }}
+                  className={`h-11 sm:h-12 rounded-lg sm:rounded-xl border-border/50 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm sm:text-base ${
+                    errors.name ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""
+                  }`}
                   required
                 />
+                {errors.name && (
+                  <p className="text-xs text-destructive mt-1">{errors.name}</p>
+                )}
               </div>
 
               {/* Email Field - Mobile Responsive */}
@@ -125,10 +219,18 @@ const ContactSection = () => {
                   type="email"
                   placeholder="your.email@example.com"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="h-11 sm:h-12 rounded-lg sm:rounded-xl border-border/50 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm sm:text-base"
+                  onChange={(e) => {
+                    setFormData({ ...formData, email: e.target.value });
+                    if (errors.email) setErrors({ ...errors, email: "" });
+                  }}
+                  className={`h-11 sm:h-12 rounded-lg sm:rounded-xl border-border/50 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm sm:text-base ${
+                    errors.email ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""
+                  }`}
                   required
                 />
+                {errors.email && (
+                  <p className="text-xs text-destructive mt-1">{errors.email}</p>
+                )}
               </div>
 
               {/* Phone Field - Mobile Responsive */}
@@ -142,9 +244,17 @@ const ContactSection = () => {
                   type="tel"
                   placeholder="+91 98765 43210"
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="h-11 sm:h-12 rounded-lg sm:rounded-xl border-border/50 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm sm:text-base"
+                  onChange={(e) => {
+                    setFormData({ ...formData, phone: e.target.value });
+                    if (errors.phone) setErrors({ ...errors, phone: "" });
+                  }}
+                  className={`h-11 sm:h-12 rounded-lg sm:rounded-xl border-border/50 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm sm:text-base ${
+                    errors.phone ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""
+                  }`}
                 />
+                {errors.phone && (
+                  <p className="text-xs text-destructive mt-1">{errors.phone}</p>
+                )}
               </div>
 
               {/* Subject Field - Mobile Responsive */}
@@ -157,9 +267,18 @@ const ContactSection = () => {
                   id="subject"
                   placeholder="What's this about?"
                   value={formData.subject}
-                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  className="h-11 sm:h-12 rounded-lg sm:rounded-xl border-border/50 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm sm:text-base"
+                  onChange={(e) => {
+                    setFormData({ ...formData, subject: e.target.value });
+                    if (errors.subject) setErrors({ ...errors, subject: "" });
+                  }}
+                  className={`h-11 sm:h-12 rounded-lg sm:rounded-xl border-border/50 bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm sm:text-base ${
+                    errors.subject ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""
+                  }`}
+                  required
                 />
+                {errors.subject && (
+                  <p className="text-xs text-destructive mt-1">{errors.subject}</p>
+                )}
               </div>
 
               {/* Message Field - Mobile Responsive */}
@@ -172,10 +291,18 @@ const ContactSection = () => {
                   id="message"
                   placeholder="Tell us how we can help you..."
                   value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="min-h-28 sm:min-h-32 rounded-lg sm:rounded-xl border-border/50 bg-background resize-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm sm:text-base"
+                  onChange={(e) => {
+                    setFormData({ ...formData, message: e.target.value });
+                    if (errors.message) setErrors({ ...errors, message: "" });
+                  }}
+                  className={`min-h-28 sm:min-h-32 rounded-lg sm:rounded-xl border-border/50 bg-background resize-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm sm:text-base ${
+                    errors.message ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""
+                  }`}
                   required
                 />
+                {errors.message && (
+                  <p className="text-xs text-destructive mt-1">{errors.message}</p>
+                )}
               </div>
 
               {/* Submit Button - Mobile Responsive */}

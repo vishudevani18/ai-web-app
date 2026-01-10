@@ -1,22 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Sparkles, ArrowRight, Zap, Users, Palette, IndianRupee, ShoppingBag, CheckCircle2, User, ImageIcon, Layout, Wand2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import image1 from "@/assets/image1.jpeg";
-import image2 from "@/assets/image2.jpeg";
-import VerticalSlider from "@/components/landing/VerticalSlider";
 
 const Hero = () => {
   const navigate = useNavigate();
-
-  // Images for vertical slider
-  // Add more images here as you upload them
-  const sliderImages = [
-    image1,
-    image2,
-    image1, // Will be replaced when you add image3
-    image2, // Will be replaced when you add image4
-    image1, // Will be replaced when you add image5
-  ];
 
   // Unique features highlighting customization
   const uniqueFeatures = [
@@ -56,9 +43,9 @@ const Hero = () => {
 
       {/* Content - Redesigned Layout - Mobile First */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-20 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12">
-          {/* Left Column - Main Content (spans 7 columns) */}
-          <div className="lg:col-span-7 space-y-6 sm:space-y-8 flex flex-col justify-center">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:gap-12">
+          {/* Main Content */}
+          <div className="space-y-6 sm:space-y-8 flex flex-col justify-center">
             {/* AI Badge - Enhanced - Mobile Responsive */}
             <div className="animate-fade-in">
               <div className="relative inline-flex items-center gap-2 sm:gap-3 bg-gradient-primary/15 border-2 border-primary/40 rounded-full px-4 sm:px-6 py-2 sm:py-3 backdrop-blur-md shadow-lg group hover:shadow-glow transition-all duration-300">
@@ -202,17 +189,6 @@ const Hero = () => {
                 </span>
                 <div className="absolute inset-0 bg-gradient-vibrant opacity-0 group-hover:opacity-100 transition-opacity" />
               </Button>
-            </div>
-          </div>
-
-          {/* Right Column - Vertical Slider (spans 5 columns) - Mobile Responsive */}
-          <div className="lg:col-span-5 animate-fade-in order-first lg:order-last" style={{ animationDelay: "0.4s" }}>
-            <div className="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-primary/20">
-              <VerticalSlider
-                images={sliderImages}
-                scrollSpeed={12}
-                className="h-full"
-              />
             </div>
           </div>
         </div>

@@ -70,7 +70,7 @@ export const useAuth = (): UseAuthReturn => {
           clearInterval(refreshTimer);
           refreshTimer = null;
         }
-        window.location.href = '/auth';
+        window.location.href = '/auth/login';
       }
     }, refreshInterval);
   }, []);

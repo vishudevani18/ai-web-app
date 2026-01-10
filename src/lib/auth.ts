@@ -25,6 +25,7 @@ export interface User {
   status: 'active' | 'inactive' | 'banned';
   profileImage: string | null;
   business: Business | null;
+  credits: number; // User's remaining credits
   createdAt: string;
   updatedAt: string;
 }
@@ -71,6 +72,7 @@ export interface UserProfile {
   profileImage?: string | null;
   address?: Address | null;
   business?: BusinessDto | null;
+  credits: number; // User's remaining credits
   createdAt: string;
   updatedAt: string;
 }

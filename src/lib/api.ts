@@ -235,49 +235,51 @@ export const generateBulkImageFromFormData = async (
   return generateBulkImage(request);
 };
 
-// System Data Response Interface
-export interface SystemDataResponse {
+// User Dashboard Statistics Types
+export interface GenerationsStatistics {
+  usersWithSingleGeneration: number;
+  usersWithBulkGeneration: number;
+  totalImageGenerations: number;
+}
+
+export interface SystemData {
+  aiFaces: number;
+  backgrounds: number;
+  poses: number;
+  categories: number;
+  industries: number;
+  themes: number;
+}
+
+export interface GeneralStatistics {
+  totalCredits: number;
+  remainingCredits: number;
+  usedCredits: number;
+  totalGeneratedImagePurchasedCredit: number; // Dummy: 0 (for future payment integration)
+  totalPaidAmount: number; // Dummy: 0 (for future payment integration)
+}
+
+export interface SystemStatisticsData {
+  generations: GenerationsStatistics;
+  system: SystemData;
+  general: GeneralStatistics;
+}
+
+export interface SystemStatisticsResponse {
   success: boolean;
-  data: Record<string, number>; // Dynamic keys with number values
+  data: SystemStatisticsData;
   error: boolean;
   message: string;
   timestamp: string;
 }
 
-// Fetch system data
-export const fetchSystemData = async (): Promise<Record<string, number>> => {
-  const response = await axiosInstance.get<SystemDataResponse>('/systemdata');
+// Fetch user dashboard statistics
+export const fetchUserDashboardStatistics = async (): Promise<SystemStatisticsData> => {
+  const response = await axiosInstance.get<SystemStatisticsResponse>('/userDashboardStatistics');
   const data = response.data;
   
   if (!data.success || data.error) {
-    throw new Error(data.message || 'Failed to fetch system data');
-  }
-
-  return data.data;
-};
-
-// Generation Statistics Response Interface
-export interface GenerationStatisticsResponse {
-  success: boolean;
-  data: {
-    singleGenerationCount: number; // Number of single generation requests
-    singleGenerationImages: number; // Total images from single generations
-    catalogGenerationCount: number; // Number of catalog generation requests
-    catalogGenerationImages: number; // Total images from catalog generations
-    totalImages: number; // Total images generated (single + catalog)
-  };
-  error: boolean;
-  message: string;
-  timestamp: string;
-}
-
-// Fetch generation statistics
-export const fetchGenerationStatistics = async (): Promise<GenerationStatisticsResponse['data']> => {
-  const response = await axiosInstance.get<GenerationStatisticsResponse>('/generation-statistics');
-  const data = response.data;
-  
-  if (!data.success || data.error) {
-    throw new Error(data.message || 'Failed to fetch generation statistics');
+    throw new Error(data.message || 'Failed to fetch user dashboard statistics');
   }
 
   return data.data;

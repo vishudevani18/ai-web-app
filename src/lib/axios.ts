@@ -63,9 +63,11 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => {
     const data = response.data;
+    const method = response.config.method?.toUpperCase();
 
-    // Show success toast if message exists and success is true
-    if (data?.success && data?.message) {
+    // Only show success toasts for mutations (POST, PATCH, DELETE, PUT), not GET requests
+    // This prevents toast spam from data fetching operations
+    if (data?.success && data?.message && method && ['POST', 'PATCH', 'DELETE', 'PUT'].includes(method)) {
       toast.success(data.message);
     }
 
