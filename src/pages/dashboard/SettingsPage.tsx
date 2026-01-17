@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "@/hooks/use-auth";
+import { useQueryClient } from "@tanstack/react-query";
 import { getProfile, updateProfile, changePassword, UpdateProfileData, ChangePasswordData, UserProfile } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,7 +34,7 @@ const BUSINESS_SEGMENTS = [
 type TabType = "profile" | "address" | "business" | "password";
 
 const SettingsPage = () => {
-  const { user } = useAuth();
+  const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState<TabType>("profile");
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
@@ -288,6 +288,8 @@ const SettingsPage = () => {
     try {
       const updateData = buildCompleteProfileData();
       await updateProfile(updateData);
+      // Invalidate user profile to refetch with updated data
+      queryClient.invalidateQueries({ queryKey: ['user-profile'] });
       // Toast is handled by axios interceptor
     } catch (error) {
       // Only show toast for validation errors (not API errors - those are handled by interceptor)
@@ -305,6 +307,8 @@ const SettingsPage = () => {
     try {
       const updateData = buildCompleteProfileData();
       await updateProfile(updateData);
+      // Invalidate user profile to refetch with updated data
+      queryClient.invalidateQueries({ queryKey: ['user-profile'] });
       // Toast is handled by axios interceptor
     } catch (error) {
       // Only show toast for validation errors (not API errors - those are handled by interceptor)
@@ -322,6 +326,8 @@ const SettingsPage = () => {
     try {
       const updateData = buildCompleteProfileData();
       await updateProfile(updateData);
+      // Invalidate user profile to refetch with updated data
+      queryClient.invalidateQueries({ queryKey: ['user-profile'] });
       // Toast is handled by axios interceptor
     } catch (error) {
       // Only show toast for validation errors (not API errors - those are handled by interceptor)

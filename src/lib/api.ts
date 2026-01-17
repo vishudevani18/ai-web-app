@@ -25,7 +25,6 @@ export interface ProductBackground {
 export interface ProductPose {
   id: string;
   name: string;
-  description: string;
   imageUrl: string;
   createdAt: string;
   updatedAt: string;
@@ -167,7 +166,10 @@ export const fetchIndustriesTree = async (): Promise<Industry[]> => {
 // Generate image
 export const generateImage = async (request: GenerateImageRequest): Promise<GenerateImageResponse> => {
   // Ensure productImage is in the correct format (data:image/...;base64,...)
-  const response = await axiosInstance.post<GenerateImageResponse>('/generate-image', request);
+  // Use longer timeout for image generation (2 minutes)
+  const response = await axiosInstance.post<GenerateImageResponse>('/generate-image', request, {
+    timeout: 2 * 60 * 1000, // 2 minutes
+  });
   return response.data;
 };
 
@@ -202,7 +204,10 @@ export const generateImageFromFormData = async (
 
 // Generate bulk images
 export const generateBulkImage = async (request: GenerateBulkImageRequest): Promise<GenerateBulkImageResponse> => {
-  const response = await axiosInstance.post<GenerateBulkImageResponse>('/generate-bulk-image', request);
+  // Use longer timeout for bulk image generation (10 minutes for up to 5 images)
+  const response = await axiosInstance.post<GenerateBulkImageResponse>('/generate-bulk-image', request, {
+    timeout: 10 * 60 * 1000, // 10 minutes
+  });
   return response.data;
 };
 
@@ -237,9 +242,10 @@ export const generateBulkImageFromFormData = async (
 
 // User Dashboard Statistics Types
 export interface GenerationsStatistics {
-  usersWithSingleGeneration: number;
-  usersWithBulkGeneration: number;
-  totalImageGenerations: number;
+  totalImageGenerations: number;        // Total successful generations
+  singleGenerations: number;            // Times single generation was used (same as images)
+  bulkGenerationRequests: number;        // Times bulk generation was used (number of requests)
+  bulkGenerations: number;               // Total images from all bulk requests
 }
 
 export interface SystemData {

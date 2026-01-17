@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import axiosInstance from './axios';
-import { setTokens, setUser, setSessionToken, getSessionToken, clearAllAuthData, getRefreshToken } from '@/utils/storage';
+import { setTokens, setSessionToken, getSessionToken, clearAllAuthData, getRefreshToken } from '@/utils/storage';
 
 // Type definitions
 export interface ApiResponse<T> {
@@ -167,7 +167,7 @@ export const completeRegistration = async (
   if (response.data.success && response.data.data) {
     const authData = response.data.data;
     setTokens(authData.accessToken, authData.refreshToken);
-    setUser(authData.user);
+    // User profile will be fetched via React Query, not stored in localStorage
     // Clear session token after successful registration
     setSessionToken('');
     return authData;
@@ -190,7 +190,7 @@ export const login = async (emailOrPhone: string, password: string): Promise<Aut
   if (response.data.success && response.data.data) {
     const authData = response.data.data;
     setTokens(authData.accessToken, authData.refreshToken);
-    setUser(authData.user);
+    // User profile will be fetched via React Query, not stored in localStorage
     return authData;
   }
 
@@ -336,9 +336,7 @@ export const refreshToken = async (): Promise<AuthResponse> => {
   if (response.data.success && response.data.data) {
     const authData = response.data.data;
     setTokens(authData.accessToken, authData.refreshToken);
-    if (authData.user) {
-      setUser(authData.user);
-    }
+    // User profile will be fetched via React Query, not stored in localStorage
     return authData;
   }
 
@@ -390,8 +388,8 @@ export const updateProfile = async (data: UpdateProfileData): Promise<UserProfil
   const response = await axiosInstance.patch<ApiResponse<UserProfile>>('/profile', data);
 
   if (response.data.success && response.data.data) {
-    // Update user in storage
-    setUser(response.data.data);
+    // User profile is managed by React Query, not localStorage
+    // Invalidate user profile query to trigger refetch with updated data
     return response.data.data;
   }
 

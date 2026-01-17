@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
+import { useUserProfile } from "@/hooks/use-user-profile";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -39,11 +40,11 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { logout, user } = useAuth();
+  const { logout } = useAuth();
+  const { data: userProfile } = useUserProfile();
   
-  // Get credits from stored user data (no API call needed)
-  // Credits are included in all user profile responses from backend
-  const credits = user?.credits ?? 0;
+  // Get credits from React Query user profile
+  const credits = userProfile?.credits ?? 0;
 
   // Memoize current page title to avoid recalculating on every render
   const currentPageTitle = useMemo(() => {

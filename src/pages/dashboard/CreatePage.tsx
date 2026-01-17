@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Upload, Sparkles, AlertCircle, Download, RefreshCw, Trash2, ChevronRight, Image, Check, ChevronLeft, Users, Loader2, Info } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchIndustriesTree, generateImageFromFormData, type Industry, type Category, type ProductType, type ProductTheme, type ProductPose, type ProductBackground, type AiFace } from "@/lib/api";
 import GenerationConfirmModal from "@/components/dashboard/GenerationConfirmModal";
 
@@ -89,6 +89,8 @@ const HorizontalCarousel = ({ items, selectedId, onSelect, itemSize = "md" }: Ca
 };
 
 const CreatePage = () => {
+  const queryClient = useQueryClient();
+  
   // Fetch industries tree from API
   const { data: industriesTree, isLoading: isLoadingIndustries, error: industriesError } = useQuery({
     queryKey: ['industries-tree'],
@@ -327,6 +329,8 @@ const CreatePage = () => {
       if (result.success && result.data?.imageUrl) {
         setGeneratedImage(result.data.imageUrl);
         toast.success("Image generated successfully!");
+        // Invalidate user profile to refetch with updated credits
+        queryClient.invalidateQueries({ queryKey: ['user-profile'] });
       } else {
         toast.error(`Failed to generate image: ${result.message || 'Unknown error'}`);
       }
@@ -336,7 +340,7 @@ const CreatePage = () => {
     } finally {
       setIsGenerating(false);
     }
-  }, [isFormValid, productImage, selectedIndustry, selectedCategory, selectedProductType, selectedPose, selectedTheme, selectedBackground, selectedFace]);
+  }, [isFormValid, productImage, selectedIndustry, selectedCategory, selectedProductType, selectedPose, selectedTheme, selectedBackground, selectedFace, queryClient]);
 
   // Reset form
   const handleReset = useCallback(() => {

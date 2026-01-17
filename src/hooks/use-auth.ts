@@ -1,8 +1,10 @@
 // Authentication hook for managing auth state
 
 import { useState, useEffect, useCallback } from 'react';
-import { getUser, getAccessToken, clearAllAuthData } from '@/utils/storage';
-import { User, login as loginApi, logout as logoutApi, refreshToken } from '@/lib/auth';
+import { getAccessToken, clearAllAuthData } from '@/utils/storage';
+import { login as loginApi, logout as logoutApi, refreshToken } from '@/lib/auth';
+import { useQueryClient } from '@tanstack/react-query';
+import type { User } from '@/lib/auth';
 
 interface UseAuthReturn {
   user: User | null;
@@ -16,35 +18,8 @@ interface UseAuthReturn {
 let refreshTimer: NodeJS.Timeout | null = null;
 
 export const useAuth = (): UseAuthReturn => {
-  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  // Initialize auth state from storage
-  useEffect(() => {
-    const initializeAuth = () => {
-      try {
-        const storedUser = getUser<User>();
-        const token = getAccessToken();
-        
-        if (storedUser && token) {
-          setUser(storedUser);
-          // Set up token refresh timer
-          setupTokenRefresh();
-        } else {
-          clearAllAuthData();
-          setUser(null);
-        }
-      } catch (error) {
-        console.error('Error initializing auth:', error);
-        clearAllAuthData();
-        setUser(null);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    initializeAuth();
-  }, []);
+  const queryClient = useQueryClient();
 
   // Setup automatic token refresh (refresh 5 minutes before expiry)
   const setupTokenRefresh = useCallback(() => {
@@ -65,7 +40,6 @@ export const useAuth = (): UseAuthReturn => {
         console.error('Token refresh failed:', error);
         // If refresh fails, clear auth and redirect to login
         clearAllAuthData();
-        setUser(null);
         if (refreshTimer) {
           clearInterval(refreshTimer);
           refreshTimer = null;
@@ -75,20 +49,43 @@ export const useAuth = (): UseAuthReturn => {
     }, refreshInterval);
   }, []);
 
+  // Initialize auth state from storage
+  useEffect(() => {
+    const initializeAuth = () => {
+      try {
+        const token = getAccessToken();
+        
+        if (token) {
+          // Set up token refresh timer
+          setupTokenRefresh();
+        } else {
+          clearAllAuthData();
+        }
+      } catch (error) {
+        console.error('Error initializing auth:', error);
+        clearAllAuthData();
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initializeAuth();
+  }, [setupTokenRefresh]);
+
   // Login function
   const login = useCallback(async (emailOrPhone: string, password: string) => {
     setIsLoading(true);
     try {
       const authData = await loginApi(emailOrPhone, password);
-      setUser(authData.user);
+      // Invalidate user profile to fetch fresh data with updated credits
+      queryClient.invalidateQueries({ queryKey: ['user-profile'] });
       setupTokenRefresh();
     } catch (error) {
-      setUser(null);
       throw error;
     } finally {
       setIsLoading(false);
     }
-  }, [setupTokenRefresh]);
+  }, [setupTokenRefresh, queryClient]);
 
   // Logout function
   const logout = useCallback(async () => {
@@ -106,7 +103,6 @@ export const useAuth = (): UseAuthReturn => {
       // Even if logout fails, clear local state
       console.error('Logout error:', error);
     } finally {
-      setUser(null);
       clearAllAuthData();
       setIsLoading(false);
       
@@ -118,16 +114,16 @@ export const useAuth = (): UseAuthReturn => {
   // Manual refresh function
   const refresh = useCallback(async () => {
     try {
-      const authData = await refreshToken();
-      setUser(authData.user || null);
+      await refreshToken();
+      // Invalidate user profile to fetch fresh data
+      queryClient.invalidateQueries({ queryKey: ['user-profile'] });
       setupTokenRefresh();
     } catch (error) {
       console.error('Token refresh failed:', error);
-      setUser(null);
       clearAllAuthData();
       throw error;
     }
-  }, [setupTokenRefresh]);
+  }, [setupTokenRefresh, queryClient]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -140,8 +136,8 @@ export const useAuth = (): UseAuthReturn => {
   }, []);
 
   return {
-    user,
-    isAuthenticated: !!user && !!getAccessToken(),
+    user: null, // User profile now comes from React Query via useUserProfile hook
+    isAuthenticated: !!getAccessToken(),
     isLoading,
     login,
     logout,

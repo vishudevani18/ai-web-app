@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Upload, Sparkles, AlertCircle, Download, RefreshCw, Trash2, ChevronRight, Image, Check, ChevronLeft, Users, Loader2, Info, Layers, X } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchIndustriesTree, generateBulkImageFromFormData, type Industry, type Category, type ProductType, type ProductTheme, type ProductPose, type ProductBackground, type AiFace } from "@/lib/api";
 import GenerationConfirmModal from "@/components/dashboard/GenerationConfirmModal";
 
@@ -190,6 +190,8 @@ const MultiSelectCarousel = ({ items, selectedIds, onToggle, maxSelection = 5, i
 };
 
 const CatalogPage = () => {
+  const queryClient = useQueryClient();
+  
   // Fetch industries tree from API
   const { data: industriesTree, isLoading: isLoadingIndustries, error: industriesError } = useQuery({
     queryKey: ['industries-tree'],
@@ -437,6 +439,8 @@ const CatalogPage = () => {
         }));
         setGeneratedImages(results);
         toast.success(`Successfully generated ${result.data.totalGenerated} of ${selectedPoses.length} image${result.data.totalGenerated > 1 ? 's' : ''}!`);
+        // Invalidate user profile to refetch with updated credits
+        queryClient.invalidateQueries({ queryKey: ['user-profile'] });
       } else {
         toast.error(result.message || "Failed to generate images. Please try again.");
       }
@@ -446,7 +450,7 @@ const CatalogPage = () => {
     } finally {
       setIsGenerating(false);
     }
-  }, [isFormValid, productImage, selectedIndustry, selectedCategory, selectedProductType, selectedPoses, selectedTheme, selectedBackground, selectedFace]);
+  }, [isFormValid, productImage, selectedIndustry, selectedCategory, selectedProductType, selectedPoses, selectedTheme, selectedBackground, selectedFace, queryClient]);
 
   // Reset form
   const handleReset = useCallback(() => {
@@ -551,11 +555,11 @@ const CatalogPage = () => {
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      {/* Header with Bulk Generation Emphasis - Mobile Responsive */}
+      {/* Header with Catalog Generation Emphasis - Mobile Responsive */}
       <div className="text-center max-w-2xl mx-auto mb-4 sm:mb-6 lg:mb-8 px-2">
         <div className="inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-primary rounded-full mb-3 sm:mb-4 shadow-lg">
           <Layers className="w-4 h-4 sm:w-5 sm:h-5 text-white flex-shrink-0" />
-          <span className="text-xs sm:text-sm font-black text-white uppercase tracking-wider">BULK GENERATION</span>
+          <span className="text-xs sm:text-sm font-black text-white uppercase tracking-wider">CATALOG GENERATION</span>
         </div>
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-2 sm:mb-4">
           Create Your <span className="text-gradient-primary">Catalog</span>
@@ -579,7 +583,7 @@ const CatalogPage = () => {
         ))}
       </div>
 
-      {/* Bulk Generation Info Banner - Mobile Responsive */}
+      {/* Catalog Generation Info Banner - Mobile Responsive */}
       <div className="flex items-center justify-center mb-4 sm:mb-6 px-2">
         <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 lg:px-5 py-2 sm:py-2.5 rounded-full bg-primary/10 border-2 border-primary/30">
           <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary flex-shrink-0" />

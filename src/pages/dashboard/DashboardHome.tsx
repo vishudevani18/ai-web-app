@@ -115,13 +115,15 @@ const DashboardHome = () => {
 
   // Generation statistics from API - memoized
   const generationStats = useMemo(() => dashboardStats ? {
-    singleGenerationCount: dashboardStats.generations.usersWithSingleGeneration,
-    catalogGenerationCount: dashboardStats.generations.usersWithBulkGeneration,
-    totalImages: dashboardStats.generations.totalImageGenerations
+    singleGenerations: dashboardStats.generations.singleGenerations,
+    bulkGenerationRequests: dashboardStats.generations.bulkGenerationRequests,
+    bulkGenerations: dashboardStats.generations.bulkGenerations,
+    totalImageGenerations: dashboardStats.generations.totalImageGenerations
   } : {
-    singleGenerationCount: 0,
-    catalogGenerationCount: 0,
-    totalImages: 0
+    singleGenerations: 0,
+    bulkGenerationRequests: 0,
+    bulkGenerations: 0,
+    totalImageGenerations: 0
   }, [dashboardStats]);
 
   // System data from dashboard statistics - memoized
@@ -233,8 +235,8 @@ const DashboardHome = () => {
                   </div>
                   <div className="mt-2 space-y-1.5">
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-muted-foreground">Users:</span>
-                      <span className="text-xs sm:text-sm font-black text-primary">{generationStats.singleGenerationCount}</span>
+                      <span className="text-xs text-muted-foreground">Times Used:</span>
+                      <span className="text-xs sm:text-sm font-black text-primary">{generationStats.singleGenerations}</span>
                     </div>
                   </div>
                 </div>
@@ -246,13 +248,17 @@ const DashboardHome = () => {
                       <div className="p-1.5 sm:p-2 bg-gradient-primary rounded-lg">
                         <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
                       </div>
-                      <span className="text-xs sm:text-sm font-bold text-foreground">Bulk Generation</span>
+                      <span className="text-xs sm:text-sm font-bold text-foreground">Catalog Generation</span>
                     </div>
                   </div>
                   <div className="mt-2 space-y-1.5">
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-muted-foreground">Users:</span>
-                      <span className="text-xs sm:text-sm font-black text-primary">{generationStats.catalogGenerationCount}</span>
+                      <span className="text-xs text-muted-foreground">Requests:</span>
+                      <span className="text-xs sm:text-sm font-black text-primary">{generationStats.bulkGenerationRequests}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-muted-foreground">Images:</span>
+                      <span className="text-xs sm:text-sm font-black text-primary">{generationStats.bulkGenerations}</span>
                     </div>
                   </div>
                 </div>
@@ -261,7 +267,7 @@ const DashboardHome = () => {
                 <div className="pt-2 border-t border-border/50">
                   <div className="flex justify-between items-center">
                     <span className="text-xs sm:text-sm font-bold text-foreground">Total Images Generated:</span>
-                    <span className="text-sm sm:text-base font-black text-primary">{generationStats.totalImages}</span>
+                    <span className="text-sm sm:text-base font-black text-primary">{generationStats.totalImageGenerations}</span>
                   </div>
                 </div>
               </div>

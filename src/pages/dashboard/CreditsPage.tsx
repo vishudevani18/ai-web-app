@@ -111,7 +111,7 @@ const CreditsPage = () => {
                   </>
                 )}
                 <span className="relative z-10 flex items-center justify-center gap-2">
-                  Buy Now
+                Buy Now
                   <ArrowRight className={`w-4 h-4 relative z-10 ${plan.popular ? 'group-hover:translate-x-2 group-hover:scale-110' : 'group-hover:translate-x-1'} transition-all duration-300`} />
                 </span>
               </Button>

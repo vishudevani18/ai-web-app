@@ -76,9 +76,20 @@ axiosInstance.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
-    // Handle network errors
+    // Handle network errors (including timeouts)
     if (!error.response) {
-      toast.error('Network error. Please check your connection and try again.');
+      // Check if it's a timeout error
+      if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
+        const url = originalRequest?.url || '';
+        // For generation endpoints, show a more specific message
+        if (url.includes('/generate-image') || url.includes('/generate-bulk-image')) {
+          toast.error('Request is taking longer than expected. The generation may still be processing. Please check your gallery or try again.');
+        } else {
+          toast.error('Request timeout. Please try again.');
+        }
+      } else {
+        toast.error('Network error. Please check your connection and try again.');
+      }
       return Promise.reject(error);
     }
 
