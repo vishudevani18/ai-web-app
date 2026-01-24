@@ -483,7 +483,7 @@ const SettingsPage = () => {
                 <Label className="text-sm font-semibold">Phone Number</Label>
                 <Input
                   type="text"
-                  value={user?.phone || ""}
+                  value={originalProfile?.phone || ""}
                   disabled
                   className="h-11 bg-muted"
                 />
