@@ -55,7 +55,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         <AuthInput
           icon="email"
           type="text"
-          placeholder="you@example.com or 9876543210"
+          placeholder="your.email@garmentoai.com or phone number"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           error={errors.email}

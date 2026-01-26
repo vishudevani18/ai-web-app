@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Camera, Home, Wand2, CreditCard, Mail, LogIn, UserPlus, Award } from "lucide-react";
+import { Menu, X, Home, Wand2, CreditCard, Mail, LogIn, UserPlus, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Logo from "@/components/ui/Logo";
 
 const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -84,15 +85,7 @@ const Navigation = () => {
           {/* Logo - Enhanced - Mobile Responsive */}
           <div className="flex-shrink-0">
             <a href="/" className="flex items-center gap-2 sm:gap-3 group touch-manipulation">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-primary rounded-lg sm:rounded-xl blur-md opacity-50 group-hover:opacity-75 transition-opacity" />
-                <div className="relative p-1.5 sm:p-2 bg-gradient-primary rounded-lg sm:rounded-xl group-hover:scale-110 transition-transform shadow-lg">
-                  <Camera className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                </div>
-              </div>
-              <span className="text-xl sm:text-2xl font-black text-foreground tracking-tight group-hover:text-primary transition-colors">
-                PhotoAI
-              </span>
+              <Logo variant="horizontal" size="md" className="group-hover:opacity-80 transition-opacity" />
             </a>
           </div>
 

@@ -117,9 +117,9 @@ const ContactSection = () => {
   }, [formData, validateForm]);
 
   const contactInfo = [
-    { icon: Mail, label: "Email", value: "hello@photoai.in", href: "mailto:hello@photoai.in" },
-    { icon: Phone, label: "Phone", value: "+91 98765 43210", href: "tel:+919876543210" },
-    { icon: MapPin, label: "Location", value: "Surat, Gujarat", href: "#" }
+    { icon: Mail, label: "Email", value: "hello@garmentoai.com", href: "mailto:hello@garmentoai.com" },
+    { icon: Phone, label: "Phone", value: "+91 XXXXX XXXXX", href: "tel:+91XXXXXXXXXX" },
+    { icon: MapPin, label: "Location", value: "Your City, State", href: "#" }
   ];
 
   return (
@@ -217,7 +217,7 @@ const ContactSection = () => {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="your.email@example.com"
+                  placeholder="your.email@garmentoai.com"
                   value={formData.email}
                   onChange={(e) => {
                     setFormData({ ...formData, email: e.target.value });
@@ -242,7 +242,7 @@ const ContactSection = () => {
                 <Input
                   id="phone"
                   type="tel"
-                  placeholder="+91 98765 43210"
+                  placeholder="+91 XXXXXXXXXX"
                   value={formData.phone}
                   onChange={(e) => {
                     setFormData({ ...formData, phone: e.target.value });

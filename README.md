@@ -1,6 +1,6 @@
-# PhotoAI - AI-Powered Product Photo Studio
+# GarmentoAI - AI-Powered Product Photo Studio
 
-Transform simple product photos into stunning e-commerce shoots with AI models. Save 90% on photoshoot costs and generate professional images in minutes.
+Studio-Quality Fashions. Where Fashions Meets AI. Transform simple product photos into stunning e-commerce shoots with AI models. Save 90% on photoshoot costs and generate professional images in minutes.
 
 ## Technologies
 
@@ -62,4 +62,4 @@ The production build will be in the `dist` directory.
 
 ## License
 
-Copyright © 2024 PhotoAI. All rights reserved.
+Copyright © 2024 GarmentoAI. All rights reserved.

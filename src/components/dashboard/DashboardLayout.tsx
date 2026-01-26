@@ -10,14 +10,15 @@ import {
   LogOut, 
   Menu,
   X,
-  Camera,
   Zap,
   Layers,
   Settings,
   Brain,
   Wand2,
-  Cpu
+  Cpu,
+  Camera
 } from "lucide-react";
+import Logo from "@/components/ui/Logo";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { useUserProfile } from "@/hooks/use-user-profile";
@@ -159,14 +160,8 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       <aside className="hidden lg:flex fixed left-0 top-0 z-40 h-screen w-64 flex-col bg-gradient-to-b from-foreground/95 via-foreground/98 to-foreground/95 backdrop-blur-xl border-r border-border/50 shadow-xl">
         {/* Logo */}
         <div className="flex items-center gap-3 px-6 py-5 border-b border-border/30">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-primary rounded-xl blur-md opacity-50" />
-            <div className="relative p-2 bg-gradient-primary rounded-xl shadow-lg">
-              <Camera className="w-5 h-5 text-white" />
-            </div>
-          </div>
+          <Logo variant="horizontal" size="sm" theme="dark" className="text-white" />
           <div className="flex flex-col">
-            <span className="text-lg font-black text-white">PhotoAI</span>
             <span className="text-xs text-white/60">Dashboard</span>
           </div>
         </div>
@@ -210,13 +205,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <div className="flex items-center justify-center px-3 sm:px-4 py-2.5 sm:py-3 w-full">
           <div className="flex items-center justify-between w-full max-w-[1920px] mx-auto">
             <Link to="/" className="flex items-center gap-2 touch-manipulation active:scale-95 flex-shrink-0">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-primary rounded-lg blur-md opacity-50" />
-                <div className="relative p-1.5 bg-gradient-primary rounded-lg">
-                  <Camera className="w-4 h-4 text-white" />
-                </div>
-              </div>
-              <span className="text-base sm:text-lg font-black text-white">PhotoAI</span>
+              <Logo variant="horizontal" size="sm" theme="dark" className="text-white" />
             </Link>
             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               <div className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-primary/30 border border-primary/50">

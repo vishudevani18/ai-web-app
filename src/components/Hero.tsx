@@ -347,6 +347,8 @@ const Hero = () => {
             </div>
           </div>
           
+        
+          
           {/* Combined Description & Platform Info */}
           <div className="space-y-3 max-w-3xl mx-auto animate-fade-in" style={{ animationDelay: "0.15s" }}>
             <p className="text-base sm:text-lg md:text-xl text-foreground/90 leading-relaxed font-medium drop-shadow-[0_1px_4px_rgba(0,0,0,0.05)]">

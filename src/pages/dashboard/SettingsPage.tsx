@@ -421,7 +421,7 @@ const SettingsPage = () => {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder="your.email@garmentoai.com"
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
@@ -443,7 +443,7 @@ const SettingsPage = () => {
                   <Input
                     id="firstName"
                     type="text"
-                    placeholder="John"
+                    placeholder="Enter first name"
                     value={firstName}
                     onChange={(e) => {
                       setFirstName(e.target.value);
@@ -464,7 +464,7 @@ const SettingsPage = () => {
                   <Input
                     id="lastName"
                     type="text"
-                    placeholder="Doe"
+                    placeholder="Enter last name"
                     value={lastName}
                     onChange={(e) => {
                       setLastName(e.target.value);
@@ -566,7 +566,7 @@ const SettingsPage = () => {
                   <Input
                     id="city"
                     type="text"
-                    placeholder="Surat"
+                    placeholder="Enter city"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     className="h-11"
@@ -579,7 +579,7 @@ const SettingsPage = () => {
                   <Input
                     id="state"
                     type="text"
-                    placeholder="Gujarat"
+                    placeholder="Enter state"
                     value={state}
                     onChange={(e) => setState(e.target.value)}
                     className="h-11"
@@ -635,7 +635,7 @@ const SettingsPage = () => {
                 <Input
                   id="businessName"
                   type="text"
-                  placeholder="ABC Enterprises"
+                  placeholder="Enter business name"
                   value={businessName}
                   onChange={(e) => setBusinessName(e.target.value)}
                   className="h-11"
@@ -694,7 +694,7 @@ const SettingsPage = () => {
                 <Input
                   id="gstNumber"
                   type="text"
-                  placeholder="27ABCDE1234F1Z5"
+                  placeholder="Enter GST number (e.g., 27ABCDE1234F1Z5)"
                   value={gstNumber}
                   onChange={(e) => setGstNumber(e.target.value)}
                   className="h-11"
@@ -707,7 +707,7 @@ const SettingsPage = () => {
                 <Input
                   id="websiteUrl"
                   type="url"
-                  placeholder="https://www.example.com"
+                  placeholder="https://www.yourwebsite.com"
                   value={websiteUrl}
                   onChange={(e) => setWebsiteUrl(e.target.value)}
                   className="h-11"
@@ -719,7 +719,7 @@ const SettingsPage = () => {
                 <Input
                   id="businessLogo"
                   type="url"
-                  placeholder="https://www.example.com/logo.png"
+                  placeholder="https://www.yourwebsite.com/logo.png"
                   value={businessLogo}
                   onChange={(e) => setBusinessLogo(e.target.value)}
                   className="h-11"

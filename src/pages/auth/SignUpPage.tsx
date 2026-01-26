@@ -60,7 +60,7 @@ const SignUpPage = () => {
     <>
       <AuthLayout
         title="Create Account"
-        subtitle="Join PhotoAI and start creating stunning model photos"
+        subtitle="Join GarmentoAI and start creating stunning model photos"
       >
         <SignUpForm
           onSubmit={handleSignUpSendOTP}

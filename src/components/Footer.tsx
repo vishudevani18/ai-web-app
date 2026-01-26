@@ -1,4 +1,5 @@
-import { Camera, Mail, Phone, MapPin, Instagram, Facebook, Twitter, Linkedin, Home, Wand2, CreditCard, MessageCircle, Sparkles, ArrowRight, Award } from "lucide-react";
+import { Mail, Phone, MapPin, Instagram, Facebook, Twitter, Linkedin, Home, Wand2, CreditCard, MessageCircle, Sparkles, ArrowRight, Award } from "lucide-react";
+import Logo from "@/components/ui/Logo";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -46,34 +47,39 @@ const Footer = () => {
           {/* Brand Section - Mobile Responsive */}
           <div className="sm:col-span-2 lg:col-span-2 space-y-4 sm:space-y-6">
             <a href="/" className="inline-flex items-center gap-2 sm:gap-3 group touch-manipulation active:scale-95">
-              <div className="p-2 sm:p-2.5 bg-gradient-primary rounded-lg sm:rounded-xl group-hover:scale-110 transition-transform shadow-lg">
-                <Camera className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-              </div>
-              <span className="text-xl sm:text-2xl font-black tracking-tight">PhotoAI</span>
+              <Logo variant="horizontal" size="md" theme="dark" className="text-white" />
             </a>
-            <p className="text-white/80 leading-relaxed max-w-md text-sm sm:text-base">
-              The only platform where you choose your own AI faces, backgrounds, poses, and themes. Generate e-commerce ready catalog images in 10 seconds for just ₹5 per image.
-            </p>
+            <div className="space-y-2">
+              <p className="text-primary font-bold text-sm sm:text-base">
+                Studio-Quality Fashions
+              </p>
+              <p className="text-white/60 text-xs sm:text-sm font-medium mb-2">
+                Where Fashions Meets AI
+              </p>
+              <p className="text-white/80 leading-relaxed max-w-md text-sm sm:text-base">
+                The only platform where you choose your own AI faces, backgrounds, poses, and themes. Generate e-commerce ready catalog images in 10 seconds for just ₹5 per image.
+              </p>
+            </div>
             
             {/* Contact Info - Mobile Responsive */}
             <div className="space-y-2 sm:space-y-3 pt-2">
-              <a href="mailto:hello@photoai.in" className="flex items-center gap-2 sm:gap-3 text-white/80 hover:text-white active:text-white transition-colors group touch-manipulation min-h-[44px]">
+              <a href="mailto:hello@garmentoai.com" className="flex items-center gap-2 sm:gap-3 text-white/80 hover:text-white active:text-white transition-colors group touch-manipulation min-h-[44px]">
                 <div className="p-1.5 bg-white/10 rounded-lg group-hover:bg-primary/30 transition-colors flex-shrink-0">
                   <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
-                <span className="text-xs sm:text-sm truncate">hello@photoai.in</span>
+                <span className="text-xs sm:text-sm truncate">hello@garmentoai.com</span>
               </a>
-              <a href="tel:+919876543210" className="flex items-center gap-2 sm:gap-3 text-white/80 hover:text-white active:text-white transition-colors group touch-manipulation min-h-[44px]">
+              <a href="tel:+91XXXXXXXXXX" className="flex items-center gap-2 sm:gap-3 text-white/80 hover:text-white active:text-white transition-colors group touch-manipulation min-h-[44px]">
                 <div className="p-1.5 bg-white/10 rounded-lg group-hover:bg-primary/30 transition-colors flex-shrink-0">
                   <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
-                <span className="text-xs sm:text-sm">+91 98765 43210</span>
+                <span className="text-xs sm:text-sm">+91 XXXXX XXXXX</span>
               </a>
               <div className="flex items-center gap-2 sm:gap-3 text-white/80">
                 <div className="p-1.5 bg-white/10 rounded-lg flex-shrink-0">
                   <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
-                <span className="text-xs sm:text-sm">Surat, Gujarat, India</span>
+                <span className="text-xs sm:text-sm">Your City, State, Country</span>
               </div>
             </div>
 
@@ -158,7 +164,7 @@ const Footer = () => {
         <div className="pt-6 sm:pt-8 border-t border-white/10">
           <div className="flex justify-center items-center text-xs sm:text-sm text-white/60 px-4">
             <p className="text-center">
-              © {new Date().getFullYear()} PhotoAI. All rights reserved.
+              © {new Date().getFullYear()} GarmentoAI. All rights reserved.
             </p>
           </div>
         </div>

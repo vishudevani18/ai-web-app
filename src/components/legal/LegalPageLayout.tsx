@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Camera, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Logo from "@/components/ui/Logo";
 
 interface LegalPageLayoutProps {
   children: ReactNode;
@@ -18,12 +19,7 @@ const LegalPageLayout = ({ children, currentPage }: LegalPageLayoutProps) => {
               to="/"
               className="inline-flex items-center gap-2 sm:gap-3 group touch-manipulation active:scale-95"
             >
-              <div className="p-2 sm:p-2.5 bg-gradient-primary rounded-lg sm:rounded-xl group-hover:scale-110 transition-transform shadow-lg">
-                <Camera className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-              </div>
-              <span className="text-xl sm:text-2xl font-black tracking-tight text-foreground">
-                PhotoAI
-              </span>
+              <Logo variant="horizontal" size="md" className="group-hover:opacity-80 transition-opacity" />
             </Link>
             <Button asChild variant="ghost" className="gap-2">
               <Link to="/">
@@ -44,7 +40,7 @@ const LegalPageLayout = ({ children, currentPage }: LegalPageLayoutProps) => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-sm text-muted-foreground text-center sm:text-left">
-              © {new Date().getFullYear()} PhotoAI. All rights reserved.
+              © {new Date().getFullYear()} GarmentoAI. All rights reserved.
             </p>
             <div className="flex gap-4 sm:gap-6">
               <Link

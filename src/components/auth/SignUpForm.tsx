@@ -48,7 +48,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
         <AuthInput
           icon="phone"
           type="tel"
-          placeholder="9876543210"
+          placeholder="Enter phone number"
           value={phone}
           onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
           error={error}

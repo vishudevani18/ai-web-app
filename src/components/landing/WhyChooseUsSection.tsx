@@ -13,6 +13,7 @@ import {
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import Logo from "@/components/ui/Logo";
 
 const benefits = [
   {
@@ -81,7 +82,9 @@ const WhyChooseUsSection = () => {
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-black text-foreground mb-4 sm:mb-6 leading-tight px-2">
             Why Brands Choose
             <br />
-            <span className="text-gradient-primary">PhotoAI Studio</span>
+            <div className="inline-flex items-center justify-center mt-2 sm:mt-3">
+              <Logo variant="text" size="lg" className="mx-auto" />
+            </div>
           </h2>
           <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
             Experience the difference with our advanced AI technology and industry expertise. 

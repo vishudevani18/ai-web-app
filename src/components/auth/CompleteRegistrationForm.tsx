@@ -507,7 +507,7 @@ const CompleteRegistrationForm = ({
           <Input
             id="city"
             type="text"
-            placeholder="Surat"
+            placeholder="Enter city"
             value={formData.address.city}
             onChange={(e) => updateField("address.city", e.target.value)}
             className="h-9 sm:h-10 text-sm"
@@ -520,7 +520,7 @@ const CompleteRegistrationForm = ({
           <Input
             id="state"
             type="text"
-            placeholder="Gujarat"
+            placeholder="Enter state"
             value={formData.address.state}
             onChange={(e) => updateField("address.state", e.target.value)}
             className="h-9 sm:h-10 text-sm"
@@ -555,7 +555,7 @@ const CompleteRegistrationForm = ({
         <Input
           id="businessName"
           type="text"
-          placeholder="ABC Enterprises"
+          placeholder="Enter business name"
           value={formData.business.businessName}
           onChange={(e) => updateField("business.businessName", e.target.value)}
           className="h-9 sm:h-10 text-sm"
@@ -620,7 +620,7 @@ const CompleteRegistrationForm = ({
         <Input
           id="gstNumber"
           type="text"
-          placeholder="27ABCDE1234F1Z5"
+          placeholder="Enter GST number (e.g., 27ABCDE1234F1Z5)"
           value={formData.business.gstNumber}
           onChange={(e) => updateField("business.gstNumber", e.target.value)}
           className="h-9 sm:h-10 text-sm"
@@ -633,7 +633,7 @@ const CompleteRegistrationForm = ({
         <Input
           id="websiteUrl"
           type="url"
-          placeholder="https://www.example.com"
+          placeholder="https://www.yourwebsite.com"
           value={formData.business.websiteUrl}
           onChange={(e) => updateField("business.websiteUrl", e.target.value)}
           className="h-9 sm:h-10 text-sm"
@@ -645,7 +645,7 @@ const CompleteRegistrationForm = ({
         <Input
           id="businessLogo"
           type="url"
-          placeholder="https://www.example.com/logo.png"
+          placeholder="https://www.yourwebsite.com/logo.png"
           value={formData.business.businessLogo}
           onChange={(e) => updateField("business.businessLogo", e.target.value)}
         />
